@@ -1,0 +1,303 @@
+<!index html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>拉圖斯</title>
+
+<style>
+/* ======= 全域樣式 ======= */
+body {
+    font-family: Arial, sans-serif; /* 設定全站字體 */
+    padding: 20px; /* 全局內邊距 */
+    background-color: #000; /* 背景黑色 */
+    color: white; /* 文字白色 */
+    margin: 0; /* 移除預設 margin */
+}
+
+/* ======= 主容器：兩欄版面配置 ======= */
+.container {
+    display: grid; /* 使用 CSS Grid 排版 */
+    grid-template-columns: 600px 260px; /* 左右欄寬度 */
+    gap: 40px; /* 左右欄間距 */
+    align-items: flex-start; /* 垂直對齊頂部 */
+    position: relative; /* 用於絕對定位漢堡選單 */
+}
+
+/* ======= 左側區塊樣式 ======= */
+.left-area {
+    display: flex;
+    flex-direction: column; /* 垂直排列內容 */
+    align-items: center; /* 置中 */
+    gap: 18px; /* 內部元素間距 */
+    font-size: 1.10em; /* 左側字體大小 */
+}
+
+/* 左側圖片 */
+.left-area img {
+    width: 30%; /* 圖片寬度 */
+    display: block;
+    margin: 0 auto; /* 置中圖片 */
+    border-radius: 10px; /* 圓角 */
+}
+
+/* 建議等級文字 */
+.info-text {
+    text-align: center; /* 置中 */
+    font-size: 1.20em; 
+    line-height: 1.5; 
+    margin-top: 5px; 
+}
+
+/* 多色攻擊力列表 */
+.attack-list {
+    text-align: center; 
+    line-height: 1.6; 
+    font-size: 1.10em; 
+    margin-top: 5px;
+}
+
+/* 各顏色職業文字 */
+.red { color: #ff4c4c; }
+.orange { color: #ffa640; }
+.green { color: #5aff5a; }
+.blue { color: #4ca6ff; }
+.purple { color: #c56cff; }
+
+/* 備註文字 */
+.note {
+    margin-top: 10px;
+    font-size: 1.05em; 
+    color: #ffdfdf;
+    text-align: center;
+    opacity: 0.9;
+}
+
+/* ======= 漢堡選單 ======= */
+.hamburger-menu {
+    position: absolute; /* 絕對定位於頁面左上 */
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 漢堡圖示與文字間距 */
+    cursor: pointer; /* 滑鼠手型 */
+    z-index: 100; /* 保證在最上層 */
+    font-size: 1.3em;
+}
+
+/* 漢堡旁文字 */
+.hamburger-text {
+    font-size: 1em;
+    color: white;
+}
+
+/* 下拉選單內容 */
+.dropdown-content {
+    display: none; /* 預設隱藏 */
+    position: absolute; /* 絕對定位於漢堡下方 */
+    top: 60px;
+    left: 20px;
+    background-color: transparent;
+    width: 220px; /* 選單寬度 */
+    border-radius: 7px;
+    overflow-y: auto; /* 超過高度自動滾動 */
+    max-height: calc(47px * 11); /* 固定顯示 10 個選項 */
+    z-index: 99;
+    flex-direction: column; /* 垂直排列按鈕 */
+    gap: 10px; /* 按鈕間距 */
+
+    /* 平滑展開動畫 */
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+/* 顯示下拉選單 */
+.dropdown-content.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 下拉選單按鈕樣式 */
+.dropdown-content a {
+    display: block;
+    padding: 12px 20px;
+    color: white; /* 文字白色 */
+    text-decoration: none; /* 移除下劃線 */
+    font-size: 1em;
+    background-color: #999; /* 按鈕底色 */
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    transition: filter 0.3s; /* 滑鼠懸停效果 */
+}
+
+/* 按鈕懸停效果 */
+.dropdown-content a:hover {
+    filter: brightness(80%);
+}
+
+/* ======= 右側報名連結列表 ======= */
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* 連結間距 */
+    margin-top: 60px;
+}
+
+/* 右側標題 */
+.links-title {
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #666; /* 下方線 */
+    padding-bottom: 5px;
+}
+
+/* 右側連結按鈕 */
+.links a {
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    transition: filter 0.3s;
+}
+
+/* 滑鼠懸停效果 */
+.links a:hover {
+    filter: brightness(80%);
+}
+</style>
+</head>
+<body>
+
+<!-- ======= 漢堡選單 ======= -->
+<div class="hamburger-menu">
+    <span>☰</span> <!-- 漢堡圖示 -->
+    <span class="hamburger-text">歷史隊伍</span> <!-- 漢堡旁文字 -->
+</div>
+
+<!-- ======= 下拉選單內容 ======= -->
+<div class="dropdown-content" id="dropdown-content">
+    <a href="https://docs.google.com/spreadsheets/d/1PV5TviB33uHzHgNyfk3kAabiayyUyFY2-6TZXjr9H-M/edit?usp=sharing" target="_blank">2025 12/04-12/10</a>
+    <a href="https://docs.google.com/spreadsheets/d/16rp5guUY1K6_5ioYNQdFAd0Kg9SKHxVJTKzyfYCUd7E/edit?usp=sharing" target="_blank">2025 11/27-12/03</a>
+    <a href="https://docs.google.com/spreadsheets/d/1FPEIA_cTIxuUjUaGPD4QDXLMHSOQQa0DIuZZCE8Vi18/edit?usp=sharing" target="_blank">2025 11/20-11/26</a>
+    <a href="https://docs.google.com/spreadsheets/d/1BX9VBFDp53yoXEzbw3jZqUQ2RI2OfJABbIyEDeqKCS8/edit?usp=sharing" target="_blank">2025 11/13-11/19</a>
+    <a href="https://docs.google.com/spreadsheets/d/1ktDsTHT9evTiqrOstr8UzMOK8OGQN9MLRKQPmyf5zCU/edit?usp=sharing" target="_blank">2025 11/06-11/12</a>
+    <a href="https://docs.google.com/spreadsheets/d/1Zg6_-7VW7ZqclRG1e0zbQbBY0ntBlKSJz-2d5bJ0txI/edit?usp=sharing" target="_blank">2025 10/30-11/05</a>
+    <a href="https://docs.google.com/spreadsheets/d/1Hp2n3nwDEoDojshraOOAvvAg_4YZNnS_7Xcb_Tt_YR0/edit?usp=sharing" target="_blank">2025 10/23-10/29</a>
+    <a href="https://docs.google.com/spreadsheets/d/1KLaeWNQMqNXh7AM-lqZ0r_zRGmm9SeXmAbqFVCsCWus/edit?usp=sharing" target="_blank">2025 10/16-10/22</a>
+    <a href="https://docs.google.com/spreadsheets/d/1qnVl6wNSDzBb2Z7ylEp_EQNCLEtBuWZEh551ENB89-o/edit?usp=sharing" target="_blank">2025 10/09-10/15</a>
+    <a href="https://docs.google.com/spreadsheets/d/1Ebus4duNAm39ZsD_bRKsTwRUqyfpVm7VZmyAY8fpUHc/edit?usp=sharing" target="_blank">2025 10/02-10/08</a>
+    <a href="https://docs.google.com/spreadsheets/d/1iFTvLo7oNPLWu1CH8DLfMZo5UCHWHC2D1-YIR7TMXCA/edit?usp=sharing" target="_blank">2025 09/25-10/01</a>
+    <a href="https://docs.google.com/spreadsheets/d/1vJP0NwidFQ2XqXArbHJg3BX8VhRrWIuumBSi02Unxes/edit?usp=sharing" target="_blank">2025 09/18-09/24</a>
+</div>
+
+<!-- ======= 主容器：兩欄布局 ======= -->
+<div class="container">
+
+    <!-- ===================== 左側內容開始 ===================== -->
+    <div class="left-area">
+
+        <!-- 左側圖片 -->
+        <img src="https://sin-nan.neocities.org/3F_3F%253F.webp" alt="描述圖片內容">
+
+        <!-- 建議等級 / 標題 -->
+        <div class="info-text">
+            建議等級　105~110等以上<br>
+            各職業　　乾淨攻擊力
+        </div>
+
+        <!-- ===== 職業攻擊力（多色） ===== -->
+        <div class="attack-list">
+
+            <div class="red">
+                法　師　- 　650 　『AP』<br>
+                劍　士　-　110等 『UP』
+            </div>
+
+            <div class="orange">
+                遊　俠　-　2100　『AD』<br>
+                狙擊手　-　2200　『AD』
+            </div>
+
+            <div class="green">
+                神槍手　-　2000　『AD』<br>
+                格鬥家　-　2700　『AD』
+            </div>
+
+            <div class="blue">
+                神　偷　-　2200　『AD』<br>
+                暗殺者　-　1700　『AD』
+            </div>
+
+            <div class="purple">
+                入場費：雪花x2 ＋ D片x1
+            </div>
+
+        </div>
+        <!-- ===== 職業攻擊力結束 ===== -->
+
+        <!-- 備註文字 -->
+        <div class="note">
+            ※ 攻擊力為建議值，實際依裝備／熟練度／等級可能略有差異!
+        </div>
+
+    </div>
+    <!-- ===================== 左側內容結束 ===================== -->
+
+    <!-- ===================== 右側：報名連結列表 ===================== -->
+    <div class="links">
+
+        <!-- 右側標題 -->
+        <div class="links-title">報名連結</div>
+
+        <!-- 每週報名連結 -->
+        <a href="https://docs.google.com/spreadsheets/d/1ReU1J6WFrHdxOZYEI_Va1l3-i6nwgrXA8_BKWprlWG0/edit?usp=sharing" target="_blank">拉圖斯 2025 12/11-12/17</a>
+        <a href="https://docs.google.com/spreadsheets/d/1u-5SRCl979wymjdq2XtN99puhiItrbZVpoEFhfTJ_E8/edit?usp=sharing" target="_blank">拉圖斯 2025 12/18-12/24</a>
+        <a href="https://docs.google.com/spreadsheets/d/1ZAsC9stGXyiO3l4DX5fzievJQLftPcu3cPXJfOoPOyw/edit?usp=sharing" target="_blank">拉圖斯 2025 12/25-12/31</a>
+        <a href="https://docs.google.com/spreadsheets/d/1CLNclrEE6fgZY8MFMc_7u6dhO6lCHOT9fiFm6Wb4pMI/edit?usp=sharing" target="_blank">拉圖斯 2026 01/01-01/07</a>
+        <a href="https://docs.google.com/spreadsheets/d/1xodfKanEi_bTwkixqlaUXCoL6O4r7sDsEpGD3LNEnuk/edit?usp=sharing" target="_blank">拉圖斯 2026 01/08-01/14</a>
+        <a href="https://docs.google.com/spreadsheets/d/1UzdaKzS24_qBiP3uWbnYycqxDF20F_LPL-prBHcgQds/edit?usp=sharing" target="_blank">拉圖斯 2026 01/15-01/21</a>
+        <a href="https://docs.google.com/spreadsheets/d/1Pa8OeLv_E6WYpW5jaCShmiSezRniTjeCJvhIHxpgtaE/edit?usp=sharing" target="_blank">拉圖斯 2026 01/22-01/28</a>
+
+    </div>
+    <!-- ===================== 右側內容結束 ===================== -->
+
+</div>
+<!-- ======= 主容器結束 ======= -->
+
+<script>
+/* ======= 彩虹背景給右側報名連結 ======= */
+const rainbowColors = ['#ea4335', '#ff6d01', '#fbbc05', '#34a853', '#00bcd4', '#4285f4', '#a142f4'];
+document.querySelectorAll('.links a').forEach((link, index) => {
+    link.style.backgroundColor = rainbowColors[index % rainbowColors.length];
+});
+
+/* ======= 漢堡選單開關控制 ======= */
+const hamburger = document.querySelector('.hamburger-menu'); // 漢堡容器
+const dropdown = document.getElementById("dropdown-content"); // 下拉選單
+
+// 點漢堡切換下拉選單
+hamburger.addEventListener('click', (e) => {
+    e.stopPropagation(); // 阻止事件冒泡到 window
+    dropdown.classList.toggle('show'); // 切換顯示
+});
+
+// 點頁面其他地方收起下拉選單
+window.addEventListener('click', () => {
+    dropdown.classList.remove('show'); // 移除顯示
+});
+
+// 點選下拉選單本身不收起（避免點選連結時被立刻關閉）
+dropdown.addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+</script>
+
+</body>
+</html>
