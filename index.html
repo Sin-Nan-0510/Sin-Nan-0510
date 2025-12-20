@@ -1,379 +1,375 @@
-<!DOCTYPE html> <!-- 宣告 HTML5 -->
-<html lang="zh-Hant"> <!-- 設定語系為繁體中文 -->
-<head> <!-- 頁面頭部開始 -->
-    <meta charset="UTF-8"> <!-- 設定 UTF-8 編碼 -->
-    <title>拉圖斯</title> <!-- 頁面標題 -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>活動資訊</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* --------------------
+   CSS 變數設定
+-------------------- */
+:root {
+  --space-left-middle: 40px;  
+  --space-middle-right: 40px; 
+  --title-height: 50px;       
+  --btn-radius: 12px;         
+}
 
-    <style> /* 樣式區開始 */
+/* --------------------
+   全域樣式
+-------------------- */
+body {
+  background-color: #000;
+  margin: 0;
+  font-family: 'Noto Serif TC', 'Microsoft JhengHei', serif;
+  color: white;
+  overflow-x: hidden;
+}
 
-        /* -----------------------
-           全域 body 樣式
-           ----------------------- */
-        body {
-            font-family: Arial, sans-serif;  /* 設定字體 */
-            padding: 20px;                   /* 頁面內距 */
-            background-color: #000;          /* 背景黑色 */
-            color: white;                    /* 全域字體白色 */
-            margin: 0;                       /* 移除預設邊距 */
-            overflow-x: hidden;              /* 防止花瓣跑出去造成水平捲動 */
-        }
+/* 容器區域 */
+.container {
+  margin-top: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px 40px;
+}
 
-        /* -----------------------
-           主排版容器（左資訊 / 右連結）
-           ----------------------- */
-        .container {
-            display: grid;                            /* 使用 Grid 排版 */
-            grid-template-columns: 600px 260px;       /* 左右兩欄固定寬度 */
-            gap: 40px;                                /* 兩區塊間距 */
-            align-items: flex-start;                  /* 元素對齊上方 */
-            position: relative;                       /* 作為相對定位容器 */
-        }
+/* --------------------
+   左欄 Info 區
+-------------------- */
+.info {
+  flex: 0 0 280px;
+  line-height: 2;
+  letter-spacing: 1px;
+  margin-right: var(--space-left-middle);
+  text-align: center;
+  font-size: 1.1em;
+}
 
-        /* 左側內容外框 */
-        .left-area {
-            display: flex;                  /* 垂直排列 */
-            flex-direction: column;         /* 垂直排列元素 */
-            align-items: center;            /* 水平置中 */
-            gap: 18px;                      /* 元素間距 */
-            font-size: 1.10em;              /* 整體字體大小 */
-        }
+.info .t-red, .info .t-purple { font-size: 1.3em; }
 
-        /* 左側圖片設定 */
-        .left-area img {
-            width: 30%;                     /* 圖片寬度 */
-            display: block;                 /* 讓 margin 生效 */
-            margin: 0 auto;                 /* 水平置中 */
-            border-radius: 10px;            /* 圓角 */
-        }
+.info-title {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #fff;
+  width: 100%;
+  box-sizing: border-box;
+  height: var(--title-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: #ffcc00;
+  text-shadow: 1px 1px 3px #000;
+}
 
-        /* 建議等級文字區 */
-        .info-text {
-            text-align: center;             /* 文字置中 */
-            font-size: 1.20em;              /* 放大字體 */
-            line-height: 1.5;               /* 行距 */
-            margin-top: 5px;                /* 上方間距 */
-        }
+/* --------------------
+   中欄 Links 區
+-------------------- */
+.links { 
+  flex: 0 0 280px;
+  margin-right: var(--space-middle-right);
+}
 
-        /* 攻擊力列表 */
-        .attack-list {
-            text-align: center;             /* 置中 */
-            line-height: 1.6;               /* 行距 */
-            font-size: 1.10em;              /* 字體大小 */
-        }
+.links-title {
+  text-align: center;
+  font-size: 1.5em; 
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #fff;
+  width: 100%;
+  box-sizing: border-box;
+  height: var(--title-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: #ffcc00;
+  text-shadow: 1px 1px 3px #000;
+}
 
-        /* 顏色分類 */
-        .red { color: #ff4c4c; }            /* 紅色 */
-        .orange { color: #ffa640; }         /* 橘色 */
-        .green { color: #5aff5a; }          /* 綠色 */
-        .blue { color: #4ca6ff; }           /* 藍色 */
-        .purple { color: #c56cff; }         /* 紫色 */
+.links .btn {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: var(--btn-radius);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.1em;
+  transition: transform 0.2s, filter 0.2s;
+}
 
-        /* 備註提示文字 */
-        .note {
-            margin-top: 10px;               /* 上方距離 */
-            font-size: 1.05em;              /* 字體大小微調 */
-            color: #ffdfdf;                 /* 淡紅色字體 */
-            text-align: center;             /* 置中 */
-            opacity: 0.9;                   /* 半透明 */
-        }
+.links .btn:hover {
+  transform: scale(1.08);
+}
 
-        /* -----------------------
-           漢堡選單
-           ----------------------- */
-        .hamburger-menu {
-            position: absolute;   /* 絕對定位 */
-            top: 20px;            /* 距離頂部 */
-            left: 20px;           /* 距離左邊 */
-            display: flex;        /* 使用 flex */
-            align-items: center;  /* 垂直置中 */
-            gap: 8px;             /* 圖示與文字間距 */
-            cursor: pointer;      /* 滑鼠變成可點擊 */
-            z-index: 100;         /* 顯示在上層 */
-            font-size: 1.3em;     /* 字體放大 */
-        }
+/* --------------------
+   右欄 Images 區
+-------------------- */
+.images { flex: 0 0 300px; }
+.images img { 
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
 
-        /* 下拉選單 */
-        .dropdown-content {
-            display: none;                    /* 預設隱藏 */
-            position: absolute;               /* 絕對定位 */
-            top: 60px;                        /* 距離頂部 */
-            left: 20px;                       /* 距離左方 */
-            background-color: transparent;    /* 背景透明 */
-            width: 220px;                     /* 固定寬度 */
-            border-radius: 7px;               /* 圓角 */
-            overflow-y: auto;                 /* 超出出現直向捲軸 */
-            max-height: calc(47px * 11);      /* 最大高度限制 */
-            z-index: 99;                      /* 堆疊順序 */
-            flex-direction: column;           /* 垂直顯示連結 */
-            gap: 10px;                        /* 間距 */
-            opacity: 0;                       /* 透明動畫初始值 */
-            transition: all 0.3s ease;        /* 動畫過渡 */
-            transform: translateY(-10px);     /* 往上位移，展開看起來比較順 */
-        }
+/* --------------------
+   文字顏色
+-------------------- */
+.t-red { color: #ff4d4d; }
+.t-orange { color: #ffa500; }
+.t-yellow { color: #ffd700; }
+.t-green { color: #5cff5c; }
+.t-blue { color: #4db8ff; }
+.t-indigo { color: #9b7cff; }
+.t-purple { color: #d88cff; }
+.t-beige { color: #e8e0c8; }
 
-        /* 顯示下拉選單的 class */
-        .dropdown-content.show {
-            display: flex;                    /* 顯示 */
-            opacity: 1;                       /* 不透明 */
-            transform: translateY(0);         /* 回到原位 */
-        }
+/* --------------------
+   響應式 (小螢幕)
+-------------------- */
+@media (max-width: 900px) {
+  .container { flex-direction: column; padding: 20px; }
+  .info, .links, .images { flex: 1 1 auto; margin-right: 0; margin-bottom: 20px; }
+  .info-title, .links-title { height: auto; display: block; text-align: center; padding-bottom: 8px; }
+}
 
-        /* 下拉選單內連結 */
-        .dropdown-content a {
-            display: block;                   /* 區塊元素 */
-            padding: 12px 20px;               /* 內距 */
-            color: white;                     /* 白字 */
-            text-decoration: none;            /* 無底線 */
-            font-size: 1em;                   /* 字體大小 */
-            background-color: #999;           /* 背景灰色 */
-            border-radius: 8px;               /* 圓角 */
-            text-align: center;               /* 置中 */
-            transition: filter 0.3s;          /* 滑過效果 */
-        }
+/* --------------------
+   櫻花飄落 CSS
+-------------------- */
+.sakura {
+    position: fixed;
+    top: -30px;
+    pointer-events: none;
+    transform-origin: center;
+    will-change: transform, opacity;
+    animation: fall var(--dur, 8s) linear forwards;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.22));
+}
 
-        /* 滑過亮度變暗 */
-        .dropdown-content a:hover {
-            filter: brightness(80%);
-        }
+@keyframes fall {
+    0% { transform: translateY(0) rotate(var(--rot-start,0deg)); opacity: 1; }
+    80% { opacity: 0.95; }
+    100% { transform: translateY(120vh) rotate(var(--rot-end,360deg)); opacity: 0.4; }
+}
 
-        /* -----------------------
-           右側：報名連結清單
-           ----------------------- */
-        .links {
-            display: flex;          /* 使用 Flex */
-            flex-direction: column; /* 垂直排列 */
-            gap: 12px;              /* 間距 */
-            margin-top: 60px;       /* 往下移避免跟漢堡選單重疊 */
-        }
+@keyframes sway {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(var(--drift,20px)); }
+    100% { transform: translateX(0); }
+}
 
-        .links-title {
-            text-align: center;     /* 置中 */
-            font-size: 1.3em;       /* 字體放大 */
-            font-weight: bold;      /* 粗體 */
-            margin-bottom: 10px;    /* 下方距離 */
-            border-bottom: 2px solid #666; /* 標題底線 */
-            padding-bottom: 5px;    /* 底線內距 */
-        }
+.sakura .petal { animation: sway var(--dur,8s) ease-in-out infinite; }
 
-        .links a {
-            padding: 12px 20px;       /* 內距 */
-            border-radius: 8px;       /* 圓角 */
-            text-align: center;       /* 置中 */
-            color: white;             /* 白字 */
-            text-decoration: none;    /* 無底線 */
-            transition: filter 0.3s;  /* 滑過變亮效果 */
-        }
+/* --------------------
+   漢堡選單 CSS
+-------------------- */
+.hamburger-menu {
+  position: fixed;
+  top: 20px; 
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  z-index: 100;
+  font-size: 1.3em;
+  color: #fff;
+}
 
-        .links a:hover {
-            filter: brightness(80%);  /* 滑過變暗 */
-        }
+.dropdown-content {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 20px;
+  background-color: rgba(50,50,50,0.9);
+  width: 220px;
+  border-radius: 7px;
+  overflow-y: auto;
+  max-height: calc(47px * 11);
+  z-index: 99;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  transform: translateY(-10px);
+}
 
-        /* -----------------------
-           櫻花單瓣 CSS
-           ----------------------- */
-        .sakura {
-            position: fixed;                           /* 固定位置，飄落時不受捲動影響 */
-            top: -30px;                                /* 生成位置在畫面上方 */
-            pointer-events: none;                      /* 不阻擋滑鼠事件 */
-            transform-origin: center;                  /* 旋轉中心點 */
-            will-change: transform, opacity;           /* 提高動畫效能 */
-            animation: fall var(--dur, 8s) linear forwards; /* 下落動畫 */
-            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.22)); /* 陰影提升立體感 */
-        }
+.dropdown-content.show {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
 
-        /* 下落動畫 */
-        @keyframes fall {
-            0% {
-                transform: translateY(0) rotate(var(--rot-start,0deg)); /* 起始位置 + 起始角度 */
-                opacity: 1;                           /* 完全不透明 */
-            }
-            80% {
-                opacity: 0.95;                        /* 微透明 */
-            }
-            100% {
-                transform: translateY(120vh) rotate(var(--rot-end,360deg)); /* 掉到畫面下方外 */
-                opacity: 0.4;                         /* 最後透明度 */
-            }
-        }
+.dropdown-content a {
+  display: block;
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  background-color: #999;
+  border-radius: 8px;
+  text-align: center;
+  transition: filter 0.3s;
+}
 
-        /* 左右搖晃（風效果） */
-        @keyframes sway {
-            0% { transform: translateX(0); }           /* 原位 */
-            50% { transform: translateX(var(--drift,20px)); } /* 偏移 */
-            100% { transform: translateX(0); }         /* 回到原位 */
-        }
-
-        /* 單瓣內 path 的風動作 */
-        .sakura .petal {
-            animation: sway var(--dur,8s) ease-in-out infinite; /* 左右搖擺 */
-        }
-
-    </style> <!-- style 結束 -->
+.dropdown-content a:hover { filter: brightness(80%); }
+</style>
 </head>
-
-<body> <!-- 主體開始 -->
+<body>
 
 <!-- 漢堡選單 -->
-<div class="hamburger-menu"> <!-- 漢堡按鈕容器 -->
-    <span>☰</span> <!-- 漢堡符號 -->
-    <span class="hamburger-text">歷史隊伍</span> <!-- 顯示文字 -->
+<div class="hamburger-menu">
+  <span>☰</span>
+  <span class="hamburger-text">歷史隊伍</span>
 </div>
 
 <!-- 下拉選單內容 -->
-<div class="dropdown-content" id="dropdown-content"> <!-- 下拉選單容器 -->
-    <!-- 每個連結都是一周的歷史資料 -->
-    <a href="https://docs.google.com/spreadsheets/d/1ReU1J6WFrHdxOZYEI_Va1l3-i6nwgrXA8_BKWprlWG0/edit?usp=sharing" target="_blank">2025 12/11-12/17</a>
-    <a href="https://docs.google.com/spreadsheets/d/1PV5TviB33uHzHgNyfk3kAabiayyUyFY2-6TZXjr9H-M/edit?usp=sharing" target="_blank">2025 12/04-12/10</a>
-    <a href="https://docs.google.com/spreadsheets/d/16rp5guUY1K6_5ioYNQdFAd0Kg9SKHxVJTKzyfYCUd7E/edit?usp=sharing" target="_blank">2025 11/27-12/03</a>
-    <a href="https://docs.google.com/spreadsheets/d/1FPEIA_cTIxuUjUaGPD4QDXLMHSOQQa0DIuZZCE8Vi18/edit?usp=sharing" target="_blank">2025 11/20-11/26</a>
-    <a href="https://docs.google.com/spreadsheets/d/1BX9VBFDp53yoXEzbw3jZqUQ2RI2OfJABbIyEDeqKCS8/edit?usp=sharing" target="_blank">2025 11/13-11/19</a>
-    <a href="https://docs.google.com/spreadsheets/d/1ktDsTHT9evTiqrOstr8UzMOK8OGQN9MLRKQPmyf5zCU/edit?usp=sharing" target="_blank">2025 11/06-11/12</a>
-    <a href="https://docs.google.com/spreadsheets/d/1Zg6_-7VW7ZqclRG1e0zbQbBY0ntBlKSJz-2d5bJ0txI/edit?usp=sharing" target="_blank">2025 10/30-11/05</a>
-    <a href="https://docs.google.com/spreadsheets/d/1Hp2n3nwDEoDojshraOOAvvAg_4YZNnS_7Xcb_Tt_YR0/edit?usp=sharing" target="_blank">2025 10/23-10/29</a>
-    <a href="https://docs.google.com/spreadsheets/d/1KLaeWNQMqNXh7AM-lqZ0r_zRGmm9SeXmAbqFVCsCWus/edit?usp=sharing" target="_blank">2025 10/16-10/22</a>
-    <a href="https://docs.google.com/spreadsheets/d/1qnVl6wNSDzBb2Z7ylEp_EQNCLEtBuWZEh551ENB89-o/edit?usp=sharing" target="_blank">2025 10/09-10/15</a>
-    <a href="https://docs.google.com/spreadsheets/d/1Ebus4duNAm39ZsD_bRKsTwRUqyfpVm7VZmyAY8fpUHc/edit?usp=sharing" target="_blank">2025 10/02-10/08</a>
-    <a href="https://docs.google.com/spreadsheets/d/1iFTvLo7oNPLWu1CH8DLfMZo5UCHWHC2D1-YIR7TMXCA/edit?usp=sharing" target="_blank">2025 09/25-10/01</a>
+<div class="dropdown-content" id="dropdown-content">
+ 　<a href="https://docs.google.com/spreadsheets/d/1ReU1J6WFrHdxOZYEI_Va1l3-i6nwgrXA8_BKWprlWG0/edit?usp=sharing" target="_blank">2025 12/11-12/17</a>
+   <a href="https://docs.google.com/spreadsheets/d/1PV5TviB33uHzHgNyfk3kAabiayyUyFY2-6TZXjr9H-M/edit?usp=sharing" target="_blank">2025 12/04-12/10</a>
+   <a href="https://docs.google.com/spreadsheets/d/16rp5guUY1K6_5ioYNQdFAd0Kg9SKHxVJTKzyfYCUd7E/edit?usp=sharing" target="_blank">2025 11/27-12/03</a>
+   <a href="https://docs.google.com/spreadsheets/d/1FPEIA_cTIxuUjUaGPD4QDXLMHSOQQa0DIuZZCE8Vi18/edit?usp=sharing" target="_blank">2025 11/20-11/26</a>
+   <a href="https://docs.google.com/spreadsheets/d/1BX9VBFDp53yoXEzbw3jZqUQ2RI2OfJABbIyEDeqKCS8/edit?usp=sharing" target="_blank">2025 11/13-11/19</a>
+   <a href="https://docs.google.com/spreadsheets/d/1ktDsTHT9evTiqrOstr8UzMOK8OGQN9MLRKQPmyf5zCU/edit?usp=sharing" target="_blank">2025 11/06-11/12</a>
+   <a href="https://docs.google.com/spreadsheets/d/1Zg6_-7VW7ZqclRG1e0zbQbBY0ntBlKSJz-2d5bJ0txI/edit?usp=sharing" target="_blank">2025 10/30-11/05</a>
+   <a href="https://docs.google.com/spreadsheets/d/1Hp2n3nwDEoDojshraOOAvvAg_4YZNnS_7Xcb_Tt_YR0/edit?usp=sharing" target="_blank">2025 10/23-10/29</a>
+   <a href="https://docs.google.com/spreadsheets/d/1KLaeWNQMqNXh7AM-lqZ0r_zRGmm9SeXmAbqFVCsCWus/edit?usp=sharing" target="_blank">2025 10/16-10/22</a>
+   <a href="https://docs.google.com/spreadsheets/d/1qnVl6wNSDzBb2Z7ylEp_EQNCLEtBuWZEh551ENB89-o/edit?usp=sharing" target="_blank">2025 10/09-10/15</a>
+   <a href="https://docs.google.com/spreadsheets/d/1Ebus4duNAm39ZsD_bRKsTwRUqyfpVm7VZmyAY8fpUHc/edit?usp=sharing" target="_blank">2025 10/02-10/08</a>
+   <a href="https://docs.google.com/spreadsheets/d/1iFTvLo7oNPLWu1CH8DLfMZo5UCHWHC2D1-YIR7TMXCA/edit?usp=sharing" target="_blank">2025 09/25-10/01</a>
     <a href="https://docs.google.com/spreadsheets/d/1vJP0NwidFQ2XqXArbHJg3BX8VhRrWIuumBSi02Unxes/edit?usp=sharing" target="_blank">2025 09/18-09/24</a>
 </div>
 
-<!-- 主內容容器 -->
-<div class="container"> <!-- Grid 主容器 -->
+<div class="container">
+  <!-- 左欄 Info -->
+  <div class="info">
+    <div class="info-title">活動資訊</div>
+    <div class="t-red">建議等級　110等以上</div>
+    <div class="t-orange">劍　士　－　120等『UP』</div>
+    <div class="t-yellow">祭　司　－　700　『AP』</div>
+    <div class="t-yellow">冰　雷　－　650　『AP』</div>
+    <div class="t-yellow">火　毒　－　650　『AP』</div>
+    <div class="t-green">遊　俠　－　2100　『AD』</div>
+    <div class="t-green">狙擊手　－　2200　『AD』</div>
+    <div class="t-blue">神槍手　－　2000　『AD』</div>
+    <div class="t-blue">格鬥家　－　2700　『AD』</div>
+    <div class="t-indigo">神　偷　－　2200　『AD』</div>
+    <div class="t-indigo">暗殺者　－　1700　『AD』</div>
+    <br>
+    <div class="t-purple">入場費：雪花x2 ＋ D片x1</div>
+    <br>
+    <div class="t-beige">※ 攻擊力為建議值，</div>
+    <div class="t-beige">實際依裝備 / 職業 / 熟練度不同。</div>
+  </div>
 
-    <!-- 左側內容 -->
-    <div class="left-area"> <!-- 左欄 -->
-        <img src="https://raw.githubusercontent.com/Sin-Nan-0510/Sin-Nan-0510/main/3F_3F%253F.png"> <!-- 頭像圖片 -->
+  <!-- 中欄 Links -->
+  <div class="links">
+    <div class="links-title">報名連結</div>
+    <a href="https://docs.google.com/spreadsheets/d/1u-5SRCl979wymjdq2XtN99puhiItrbZVpoEFhfTJ_E8/edit?usp=sharing" target="_blank" class="btn">2025 12/18-12/24</a>
+    <a href="https://docs.google.com/spreadsheets/d/1ZAsC9stGXyiO3l4DX5fzievJQLftPcu3cPXJfOoPOyw/edit?usp=sharing" target="_blank" class="btn">2025 12/25-12/31</a>
+    <a href="https://docs.google.com/spreadsheets/d/1CLNclrEE6fgZY8MFMc_7u6dhO6lCHOT9fiFm6Wb4pMI/edit?usp=sharing" target="_blank" class="btn">2026 01/01-01/07</a>
+    <a href="https://docs.google.com/spreadsheets/d/1xodfKanEi_bTwkixqlaUXCoL6O4r7sDsEpGD3LNEnuk/edit?usp=sharing" target="_blank" class="btn">2026 01/08-01/14</a>
+    <a href="https://docs.google.com/spreadsheets/d/1UzdaKzS24_qBiP3uWbnYycqxDF20F_LPL-prBHcgQds/edit?usp=sharing" target="_blank" class="btn">2026 01/15-01/21</a>
+    <a href="https://docs.google.com/spreadsheets/d/1Pa8OeLv_E6WYpW5jaCShmiSezRniTjeCJvhIHxpgtaE/edit?usp=sharing" target="_blank" class="btn">2026 01/22-01/28</a>
+    <a href="#" target="_blank" class="btn">　　</a>
+  </div>
 
-        <div class="info-text"> <!-- 建議等級區塊 -->
-            建議等級　110等以上<br> <!-- 建議等級 -->
-            各職業　　乾淨攻擊力 <!-- 攻擊力說明 -->
-        </div>
-
-        <!-- 攻擊力清單 -->
-        <div class="attack-list">
-            <div class="red">法　師 - 650 『AP』<br>劍　士 - 120等 『UP』</div>
-            <div class="orange">遊　俠 - 2100 『AD』<br>狙擊手 - 2200 『AD』</div>
-            <div class="green">神槍手 - 2000 『AD』<br>格鬥家 - 2700 『AD』</div>
-            <div class="blue">神　偷 - 2200 『AD』<br>暗殺者 - 1700 『AD』</div>
-            <div class="purple">入場費：雪花x2 ＋ D片x1</div>
-        </div>
-
-        <div class="note"> <!-- 備註 -->
-            ※ 攻擊力為建議值，實際依裝備與熟練度可能不同。
-        </div>
-    </div>
-
-    <!-- 右側連結 -->
-    <div class="links"> <!-- 右欄容器 -->
-        <div class="links-title">報名連結</div> <!-- 標題 -->
-
-        <!-- 每週報名連結 -->
-        <a href="https://docs.google.com/spreadsheets/d/1u-5SRCl979wymjdq2XtN99puhiItrbZVpoEFhfTJ_E8/edit?usp=sharing" target="_blank">2025 12/18-12/24</a>
-        <a href="https://docs.google.com/spreadsheets/d/1ZAsC9stGXyiO3l4DX5fzievJQLftPcu3cPXJfOoPOyw/edit?usp=sharing" target="_blank">2025 12/25-12/31</a>
-        <a href="https://docs.google.com/spreadsheets/d/1CLNclrEE6fgZY8MFMc_7u6dhO6lCHOT9fiFm6Wb4pMI/edit?usp=sharing" target="_blank">2026 01/01-01/07</a>
-        <a href="https://docs.google.com/spreadsheets/d/1xodfKanEi_bTwkixqlaUXCoL6O4r7sDsEpGD3LNEnuk/edit?usp=sharing" target="_blank">2026 01/08-01/14</a>
-        <a href="https://docs.google.com/spreadsheets/d/1UzdaKzS24_qBiP3uWbnYycqxDF20F_LPL-prBHcgQds/edit?usp=sharing" target="_blank">2026 01/15-01/21</a>
-        <a href="https://docs.google.com/spreadsheets/d/1Pa8OeLv_E6WYpW5jaCShmiSezRniTjeCJvhIHxpgtaE/edit?usp=sharing" target="_blank">2026 01/22-01/28</a>
-    </div>
+  <!-- 右欄 Images -->
+  <div class="images">
+    <img src="https://raw.githubusercontent.com/Sin-Nan-0510/Sin-Nan-0510/main/拉圖斯.gif" alt="Image">
+  </div>
 </div>
 
-<script> /* JavaScript 程式碼開始 */
-
-/* 彩虹連結背景 */
-const rainbowColors=['#ea4335','#ff6d01','#fbbc05','#34a853','#00bcd4','#4285f4','#a142f4']; /* 定義按鈕背景色陣列 */
-
-/* 替每個連結套用顏色 */
-document.querySelectorAll('.links a').forEach((link,index)=>{
-    link.style.backgroundColor=rainbowColors[index%rainbowColors.length]; /* 按序套色 */
-});
-
-/* 漢堡選單開關 */
-const hamburger=document.querySelector('.hamburger-menu'); /* 取得漢堡選單元素 */
-const dropdown=document.getElementById("dropdown-content"); /* 取得下拉內容區 */
-
-hamburger.addEventListener('click',e=>{ /* 點擊漢堡 */
-    e.stopPropagation();                /* 不讓事件冒泡 */
-    dropdown.classList.toggle('show');  /* 開關下拉 */
-});
-
-window.addEventListener('click',()=>{ dropdown.classList.remove('show'); }); /* 點擊外面關閉 */
-dropdown.addEventListener('click',e=>{ e.stopPropagation(); }); /* 點擊選單內部不關閉 */
-
-/* -----------------------
-   櫻花雨（單瓣）
-   ----------------------- */
+<script>
+// --------------------
+// 櫻花動畫
+// --------------------
 (function(){
-    const svgns="http://www.w3.org/2000/svg"; /* SVG namespace */
-    const rand=(min,max)=>min+Math.random()*(max-min); /* 隨機數函數 */
+    const svgns="http://www.w3.org/2000/svg";
+    const rand=(min,max)=>min+Math.random()*(max-min);
 
-    function createPetal(){ /* 建立花瓣函式 */
+    function createPetal(){
+        const svg=document.createElementNS(svgns,"svg");
+        svg.setAttribute("viewBox","0 0 100 100");
+        svg.classList.add("sakura");
 
-        const svg=document.createElementNS(svgns,"svg"); /* 建立 SVG 元素 */
-        svg.setAttribute("viewBox","0 0 100 100");       /* 視窗大小 */
-        svg.classList.add("sakura");                    /* 套用櫻花 CSS */
-
-        /* 動畫變數：時間、角度、風偏移 */
         const dur=rand(6,12);
         svg.style.setProperty("--dur",dur+"s");
         svg.style.setProperty("--rot-start",rand(-20,20)+"deg");
         svg.style.setProperty("--rot-end",rand(180,540)+"deg");
         svg.style.setProperty("--drift",rand(10,40)+"px");
-
-        /* 隨機出現位置（左右） */
         svg.style.left=rand(0,100)+"vw";
         svg.style.opacity=rand(0.8,1);
-
-        /* 隨機大小 */
         const size=rand(18,50);
         svg.style.width=size+"px";
         svg.style.height=size+"px";
 
-        /* 漸層顏色設定 */
-        const defs=document.createElementNS(svgns,"defs"); /* 建立漸層定義 */
+        const defs=document.createElementNS(svgns,"defs");
         const grad=document.createElementNS(svgns,"linearGradient");
-        const gid="grad"+Date.now()+Math.random(); /* 唯一漸層 ID */
-
+        const gid="grad"+Date.now()+Math.random();
         grad.setAttribute("id",gid);
-        grad.setAttribute("x1","0%"); grad.setAttribute("y1","0%");
-        grad.setAttribute("x2","100%"); grad.setAttribute("y2","100%");
-
-        /* 第一段 */
+        grad.setAttribute("x1","0%");
+        grad.setAttribute("y1","0%");
+        grad.setAttribute("x2","100%");
+        grad.setAttribute("y2","100%");
         const s1=document.createElementNS(svgns,"stop");
         s1.setAttribute("offset","0%");
         s1.setAttribute("stop-color","#ffe3f1");
-
-        /* 第二段 */
         const s2=document.createElementNS(svgns,"stop");
         s2.setAttribute("offset","70%");
         s2.setAttribute("stop-color","#ff9ac3");
-
         grad.appendChild(s1);
         grad.appendChild(s2);
         defs.appendChild(grad);
         svg.appendChild(defs);
 
-        /* 建立單瓣形狀 */
         const path=document.createElementNS(svgns,"path");
-        path.setAttribute("class","petal"); /* 套用搖擺動畫 */
-        path.setAttribute("fill",`url(#${gid})`); /* 套用漸層 */
-        path.setAttribute("d",
-            "M50 10 C70 25,80 45,60 70 C50 85,40 85,30 70 C10 45,30 25,50 10 Z"
-        ); /* 櫻花瓣路徑 */
-        path.setAttribute("opacity",rand(0.85,1)); /* 隨機透明度 */
+        path.setAttribute("class","petal");
+        path.setAttribute("fill",`url(#${gid})`);
+        path.setAttribute("d","M50 10 C70 25,80 45,60 70 C50 85,40 85,30 70 C10 45,30 25,50 10 Z");
+        path.setAttribute("opacity",rand(0.85,1));
+        svg.appendChild(path);
 
-        svg.appendChild(path); /* 加入到 SVG */
-
-        document.body.appendChild(svg); /* 顯示在頁面上 */
-
-        setTimeout(()=>svg.remove(),(dur*1000)+2000); /* 动画结束后移除 */
+        document.body.appendChild(svg);
+        setTimeout(()=>svg.remove(),(dur*1000)+2000);
     }
 
-    /* 每 300 毫秒生成一片花瓣 */
     setInterval(createPetal,300);
+})();
 
-})(); /* 立即執行函式 */
+// --------------------
+// 漢堡選單功能
+// --------------------
+const hamburger = document.querySelector('.hamburger-menu');
+const dropdown = document.getElementById('dropdown-content');
 
-</script> <!-- script 結束 -->
+hamburger.addEventListener('click', e => {
+    e.stopPropagation();
+    dropdown.classList.toggle('show');
+});
 
-</body> <!-- 主體結束 -->
-</html> <!-- HTML 結束 -->
+window.addEventListener('click', () => dropdown.classList.remove('show'));
+dropdown.addEventListener('click', e => e.stopPropagation());
+
+// --------------------
+// 彩虹按鈕背景
+// --------------------
+const rainbowColors=['#ea4335','#ff6d01','#fbbc05','#34a853','#00bcd4','#4285f4','#a142f4'];
+const buttons = document.querySelectorAll('.links .btn');
+
+buttons.forEach((btn, index)=>{
+  const color = rainbowColors[index % rainbowColors.length];
+  btn.style.background = color;
+  btn.addEventListener('mouseover', ()=>btn.style.filter='brightness(120%)');
+  btn.addEventListener('mouseout', ()=>btn.style.filter='brightness(100%)');
+});
+</script>
+
+</body>
+</html>
