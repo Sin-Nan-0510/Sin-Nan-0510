@@ -1,127 +1,127 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
+<!DOCTYPE html>				<!-- 宣告 HTML5 文件類型 -->
+<html lang="zh-TW">			<!-- 指定網頁語系為繁體中文（台灣） -->
 <head>
-<meta charset="UTF-8">
-<title>活動資訊</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">	 		<!-- 設定字元編碼為 UTF-8，避免中文亂碼 -->
+<title>活動資訊</title>			<!-- 瀏覽器分頁顯示的標題 -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">		  <!-- 載入 Google Fonts：思源宋體（繁體中文） -->
 <style>
 /* --------------------
    CSS 變數設定
 -------------------- */
 :root {
-  --space-left-middle: 40px;  
-  --space-middle-right: 40px; 
-  --title-height: 50px;       
-  --btn-radius: 12px;         
+  --space-left-middle: 40px;	/* 左欄與中欄的間距 */
+  --space-middle-right: 40px;	/* 中欄與右欄的間距 */
+  --title-height: 50px;		/* 標題區塊高度 */
+  --btn-radius: 12px;		/* 按鈕圓角半徑 */
 }
 
 /* --------------------
    全域樣式
 -------------------- */
 body {
-  background-color: #000;
-  margin: 0;
-  font-family: 'Noto Serif TC', 'Microsoft JhengHei', serif;
-  color: white;
-  overflow-x: hidden;
+  background-color: #000;	/* 整個頁面背景為黑色 */
+  margin: 0;			/* 移除瀏覽器預設外距 */
+  font-family: 'Noto Serif TC', 'Microsoft JhengHei', serif;	      /* 字型優先順序：Google 字型 → 微軟正黑 → serif */
+  color: white;			/* 全站預設文字顏色為白色 */
+  overflow-x: hidden;		/* 防止橫向捲軸出現 */
 }
 
 /* 容器區域 */
 .container {
-  margin-top: 80px;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 20px 40px;
+  margin-top: 80px;		/* 與頁面頂部保持距離（可能有 header） */
+  display: flex;		/* 使用 Flexbox 排版 */
+  flex-wrap: wrap;		/* 螢幕縮小時允許換行 */
+  padding: 20px 40px;		/* 內距：上下 20px，左右 40px */
 }
 
 /* --------------------
    左欄 Info 區
 -------------------- */
 .info {
-  flex: 0 0 300px;
-  line-height: 2;
-  letter-spacing: 1px;
-  margin-right: var(--space-left-middle);
-  text-align: center;
-  font-size: 1.1em;
+  flex: 0 0 300px;				/* 固定寬度 300px */
+  line-height: 2;				/* 行高 */
+  letter-spacing: 1px;				/* 字間距 */
+  margin-right: var(--space-left-middle);	/* 右邊距 */
+  text-align: center;				/* 文字置中 */
+  font-size: 1.1em;				/* 字體稍大 */
 }
 
-.info .t-red, .info .t-purple { font-size: 1.3em; }
+.info .t-red, .info .t-purple { font-size: 1.3em; }	/* 字體稍大 */
 
 .info-title {
-  text-align: center;
-  font-size: 1.5em;
-  font-weight: 600;
-  padding-bottom: 10px;
-  border-bottom: 3px solid #fff;
-  width: 100%;
-  box-sizing: border-box;
-  height: var(--title-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  color: #ffcc00;
-  text-shadow: 1px 1px 3px #000;
+  text-align: center;					/* 文字置中 */
+  font-size: 1.5em;					/* 標題字體較大 */
+  font-weight: 600;					/* 半粗體 */
+  padding-bottom: 10px;					/* 底部內距 */
+  border-bottom: 3px solid #fff;			/* 底部白色線條 */
+  width: 100%;						/* 寬度填滿父容器 */
+  box-sizing: border-box;				/* 含內距與邊框計算寬度 */
+  height: var(--title-height);				/* 高度使用 CSS 變數 */
+  display: flex;					/* 使用 Flex 排版 */
+  align-items: center;					/* 垂直置中內容 */
+  justify-content: center;				/* 水平置中內容 */
+  margin-bottom: 20px;					/* 下方外距 */
+  color: #ffcc00;					/* 文字顏色黃金色 */
+  text-shadow: 1px 1px 3px #000;			/* 黑色文字陰影 */
 }
 
 /* --------------------
    中欄 Links 區
 -------------------- */
 .links { 
-  flex: 0 0 280px;
-  margin-right: var(--space-middle-right);
+  flex: 0 0 280px;				/* 固定寬度 280px */
+  margin-right: var(--space-middle-right);	/* 右邊距 */	
 }
 
 .links-title {
-  text-align: center;
-  font-size: 1.5em; 
-  font-weight: 600;
-  padding-bottom: 10px;
-  border-bottom: 3px solid #fff;
-  width: 100%;
-  box-sizing: border-box;
-  height: var(--title-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  color: #ffcc00;
-  text-shadow: 1px 1px 3px #000;
+  text-align: center;				/* 文字置中 */
+  font-size: 1.5em; 				/* 標題字體較大 */
+  font-weight: 600;				/* 半粗體 */
+  padding-bottom: 10px;				/* 底部內距 */
+  border-bottom: 3px solid #fff;		/* 底部白色線條 */
+  width: 100%;					/* 寬度填滿父容器 */
+  box-sizing: border-box;			/* 含內距與邊框計算寬度 */
+  height: var(--title-height);			/* 高度使用 CSS 變數 */
+  display: flex;				/* 使用 Flex 排版 */
+  align-items: center;				/* 垂直置中 */
+  justify-content: center;			/* 水平置中 */
+  margin-bottom: 20px;				/* 下方外距 */
+  color: #ffcc00;				/* 文字顏色黃金色 */
+  text-shadow: 1px 1px 3px #000;		/* 黑色文字陰影 */
 }
 
 .links .btn {
-  display: block;
-  text-align: center;
-  padding: 14px;
-  margin-bottom: 12px;
-  border-radius: var(--btn-radius);
-  color: #fff;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 1.1em;
-  transition: transform 0.2s, filter 0.2s;
+  display: block;				/* 區塊元素，整行點擊 */
+  text-align: center;				/* 文字置中 */
+  padding: 14px;				/* 內距 */
+  margin-bottom: 12px;				/* 底部間距 */
+  border-radius: var(--btn-radius);		/* 圓角 */
+  color: #fff;					/* 文字白色 */
+  font-weight: 600;				/* 半粗體 */
+  text-decoration: none;			/* 移除底線 */
+  font-size: 1.1em;				/* 字體稍大 */
+  transition: transform 0.2s, filter 0.2s;	/* 動畫效果 */
 }
 
-.links .btn:hover {
-  transform: scale(1.08);
+.links .btn:hover {				/* 滑鼠懸停效果 */
+  transform: scale(1.08);			/* 放大 8% */
 }
 
 /* --------------------
    右欄 Images 區
 -------------------- */
-.images { flex: 0 0 300px; }
+.images { flex: 0 0 300px; }			/* 固定寬度 300px */
 .images img { 
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  width: 100%;					/* 寬度填滿父容器 */
+  border-radius: 12px;				/* 圓角 */
+  margin-bottom: 12px;				/* 下方間距 */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);	/* 陰影效果 */
 }
-.images img:nth-child(2),
+.images img:nth-child(2),			/* 第二張和第三張圖片特殊調整 */
 .images img:nth-child(3) {
-  width: 20%;       /* 調整成你想要的大小，例如 70% */
-  margin: 0 auto 12px;  /* 水平置中 + 底部間距 */
-  display: block;       /* 讓 margin auto 有作用 */
+  width: 20%;      				/* 調整寬度（例如 20%） */
+  margin: 0 auto 12px;  			/* 上下間距 + 水平置中 */
+  display: block;       			/* 讓 margin auto 水平置中生效 */
 }
 
    
@@ -239,20 +239,20 @@ body {
 
 <!-- 下拉選單內容 -->
 <div class="dropdown-content" id="dropdown-content">
-   <a href="https://docs.google.com/spreadsheets/d/1u-5SRCl979wymjdq2XtN99puhiItrbZVpoEFhfTJ_E8/edit?usp=sharing" target="_blank">2025 12/18-12/24</a>
- 　<a href="https://docs.google.com/spreadsheets/d/1ReU1J6WFrHdxOZYEI_Va1l3-i6nwgrXA8_BKWprlWG0/edit?usp=sharing" target="_blank">2025 12/11-12/17</a>
-   <a href="https://docs.google.com/spreadsheets/d/1PV5TviB33uHzHgNyfk3kAabiayyUyFY2-6TZXjr9H-M/edit?usp=sharing" target="_blank">2025 12/04-12/10</a>
-   <a href="https://docs.google.com/spreadsheets/d/16rp5guUY1K6_5ioYNQdFAd0Kg9SKHxVJTKzyfYCUd7E/edit?usp=sharing" target="_blank">2025 11/27-12/03</a>
-   <a href="https://docs.google.com/spreadsheets/d/1FPEIA_cTIxuUjUaGPD4QDXLMHSOQQa0DIuZZCE8Vi18/edit?usp=sharing" target="_blank">2025 11/20-11/26</a>
-   <a href="https://docs.google.com/spreadsheets/d/1BX9VBFDp53yoXEzbw3jZqUQ2RI2OfJABbIyEDeqKCS8/edit?usp=sharing" target="_blank">2025 11/13-11/19</a>
-   <a href="https://docs.google.com/spreadsheets/d/1ktDsTHT9evTiqrOstr8UzMOK8OGQN9MLRKQPmyf5zCU/edit?usp=sharing" target="_blank">2025 11/06-11/12</a>
-   <a href="https://docs.google.com/spreadsheets/d/1Zg6_-7VW7ZqclRG1e0zbQbBY0ntBlKSJz-2d5bJ0txI/edit?usp=sharing" target="_blank">2025 10/30-11/05</a>
-   <a href="https://docs.google.com/spreadsheets/d/1Hp2n3nwDEoDojshraOOAvvAg_4YZNnS_7Xcb_Tt_YR0/edit?usp=sharing" target="_blank">2025 10/23-10/29</a>
-   <a href="https://docs.google.com/spreadsheets/d/1KLaeWNQMqNXh7AM-lqZ0r_zRGmm9SeXmAbqFVCsCWus/edit?usp=sharing" target="_blank">2025 10/16-10/22</a>
-   <a href="https://docs.google.com/spreadsheets/d/1qnVl6wNSDzBb2Z7ylEp_EQNCLEtBuWZEh551ENB89-o/edit?usp=sharing" target="_blank">2025 10/09-10/15</a>
-   <a href="https://docs.google.com/spreadsheets/d/1Ebus4duNAm39ZsD_bRKsTwRUqyfpVm7VZmyAY8fpUHc/edit?usp=sharing" target="_blank">2025 10/02-10/08</a>
-   <a href="https://docs.google.com/spreadsheets/d/1iFTvLo7oNPLWu1CH8DLfMZo5UCHWHC2D1-YIR7TMXCA/edit?usp=sharing" target="_blank">2025 09/25-10/01</a>
-    <a href="https://docs.google.com/spreadsheets/d/1vJP0NwidFQ2XqXArbHJg3BX8VhRrWIuumBSi02Unxes/edit?usp=sharing" target="_blank">2025 09/18-09/24</a>
+	<a href="https://docs.google.com/spreadsheets/d/1u-5SRCl979wymjdq2XtN99puhiItrbZVpoEFhfTJ_E8/edit?usp=sharing" target="_blank">2025 12/18-12/24</a>
+	<a href="https://docs.google.com/spreadsheets/d/1ReU1J6WFrHdxOZYEI_Va1l3-i6nwgrXA8_BKWprlWG0/edit?usp=sharing" target="_blank">2025 12/11-12/17</a>
+	<a href="https://docs.google.com/spreadsheets/d/1PV5TviB33uHzHgNyfk3kAabiayyUyFY2-6TZXjr9H-M/edit?usp=sharing" target="_blank">2025 12/04-12/10</a>
+	<a href="https://docs.google.com/spreadsheets/d/16rp5guUY1K6_5ioYNQdFAd0Kg9SKHxVJTKzyfYCUd7E/edit?usp=sharing" target="_blank">2025 11/27-12/03</a>
+	<a href="https://docs.google.com/spreadsheets/d/1FPEIA_cTIxuUjUaGPD4QDXLMHSOQQa0DIuZZCE8Vi18/edit?usp=sharing" target="_blank">2025 11/20-11/26</a>
+	<a href="https://docs.google.com/spreadsheets/d/1BX9VBFDp53yoXEzbw3jZqUQ2RI2OfJABbIyEDeqKCS8/edit?usp=sharing" target="_blank">2025 11/13-11/19</a>
+	<a href="https://docs.google.com/spreadsheets/d/1ktDsTHT9evTiqrOstr8UzMOK8OGQN9MLRKQPmyf5zCU/edit?usp=sharing" target="_blank">2025 11/06-11/12</a>
+	<a href="https://docs.google.com/spreadsheets/d/1Zg6_-7VW7ZqclRG1e0zbQbBY0ntBlKSJz-2d5bJ0txI/edit?usp=sharing" target="_blank">2025 10/30-11/05</a>
+	<a href="https://docs.google.com/spreadsheets/d/1Hp2n3nwDEoDojshraOOAvvAg_4YZNnS_7Xcb_Tt_YR0/edit?usp=sharing" target="_blank">2025 10/23-10/29</a>
+	<a href="https://docs.google.com/spreadsheets/d/1KLaeWNQMqNXh7AM-lqZ0r_zRGmm9SeXmAbqFVCsCWus/edit?usp=sharing" target="_blank">2025 10/16-10/22</a>
+	<a href="https://docs.google.com/spreadsheets/d/1qnVl6wNSDzBb2Z7ylEp_EQNCLEtBuWZEh551ENB89-o/edit?usp=sharing" target="_blank">2025 10/09-10/15</a>
+	<a href="https://docs.google.com/spreadsheets/d/1Ebus4duNAm39ZsD_bRKsTwRUqyfpVm7VZmyAY8fpUHc/edit?usp=sharing" target="_blank">2025 10/02-10/08</a>
+	<a href="https://docs.google.com/spreadsheets/d/1iFTvLo7oNPLWu1CH8DLfMZo5UCHWHC2D1-YIR7TMXCA/edit?usp=sharing" target="_blank">2025 09/25-10/01</a>
+	<a href="https://docs.google.com/spreadsheets/d/1vJP0NwidFQ2XqXArbHJg3BX8VhRrWIuumBSi02Unxes/edit?usp=sharing" target="_blank">2025 09/18-09/24</a>
 </div>
 
 <div class="container">
@@ -280,7 +280,6 @@ body {
   <!-- 中欄 Links -->
   <div class="links">
     <div class="links-title">報名連結</div>
-    
     <a href="https://docs.google.com/spreadsheets/d/1ZAsC9stGXyiO3l4DX5fzievJQLftPcu3cPXJfOoPOyw/edit?usp=sharing" target="_blank" class="btn">2025 12/25-12/31</a>
     <a href="https://docs.google.com/spreadsheets/d/1CLNclrEE6fgZY8MFMc_7u6dhO6lCHOT9fiFm6Wb4pMI/edit?usp=sharing" target="_blank" class="btn">2026 01/01-01/07</a>
     <a href="https://docs.google.com/spreadsheets/d/1xodfKanEi_bTwkixqlaUXCoL6O4r7sDsEpGD3LNEnuk/edit?usp=sharing" target="_blank" class="btn">2026 01/08-01/14</a>
