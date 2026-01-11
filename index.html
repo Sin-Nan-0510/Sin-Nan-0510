@@ -129,22 +129,22 @@ body {
 /* --------------------
    文字顏色
 -------------------- */
-.t-red { color: #ff4d4d; }
-.t-orange { color: #ffa500; }
-.t-yellow { color: #ffd700; }
-.t-green { color: #5cff5c; }
-.t-blue { color: #4db8ff; }
-.t-indigo { color: #9b7cff; }
-.t-purple { color: #d88cff; }
-.t-beige { color: #e8e0c8; }
+.t-red { color: #ff4d4d; }		/* 紅色：偏亮的紅色 */
+.t-orange { color: #ffa500; }	/* 橘色：標準橘色 */
+.t-yellow { color: #ffd700; }	/* 黃色：金黃色 */
+.t-green { color: #5cff5c; }	/* 綠色：亮綠色 */
+.t-blue { color: #4db8ff; }		/* 藍色：天空藍 */
+.t-indigo { color: #9b7cff; }	/* 靛色：偏紫的藍色 */
+.t-purple { color: #d88cff; }	/* 紫色：淡紫色 */
+.t-beige { color: #e8e0c8; }	/* 米色：淺米白色 */
 
 /* --------------------
    響應式 (小螢幕)
 -------------------- */
-@media (max-width: 900px) {
-  .container { flex-direction: column; padding: 20px; }
-  .info, .links, .images { flex: 1 1 auto; margin-right: 0; margin-bottom: 20px; }
-  .info-title, .links-title { height: auto; display: block; text-align: center; padding-bottom: 8px; }
+@media (max-width: 900px) {				/* 螢幕寬度小於等於 900px 時套用（平板 / 手機） */
+  .container { flex-direction: column; padding: 20px; }		/* 版面改為直向排列並增加內距 */
+  .info, .links, .images { flex: 1 1 auto; margin-right: 0; margin-bottom: 20px; }	/* 區塊自動伸縮、取消右邊距、增加下邊距 */	
+  .info-title, .links-title { height: auto; display: block; text-align: center; padding-bottom: 8px; }	 /* 標題高度自適應、置中顯示並加下方間距 */
 }
 
 /* --------------------
@@ -177,56 +177,59 @@ body {
 /* --------------------
    漢堡選單 CSS
 -------------------- */
-.hamburger-menu {
-  position: fixed;
-  top: 20px; 
-  left: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  z-index: 100;
-  font-size: 1.3em;
-  color: #fff;
+.hamburger-menu {                /* 漢堡選單容器 */
+  position: fixed;               /* 固定在畫面上不隨滾動 */
+  top: 20px;                     /* 距離畫面上方 20px */
+  left: 20px;                    /* 距離畫面左側 20px */
+  display: flex;                 /* 使用彈性盒模型排列 */
+  align-items: center;           /* 垂直置中對齊 */
+  gap: 8px;                      /* 圖示與文字間距 */
+  cursor: pointer;               /* 滑鼠移上顯示手型 */
+  z-index: 100;                  /* 提高層級避免被遮擋 */
+  font-size: 1.3em;              /* 字體大小放大 */
+  color: #fff;                   /* 文字顏色為白色 */
 }
+
 
 .dropdown-content {
-  display: none;
-  position: fixed;
-  top: 60px;
-  left: 20px;
-  background-color: rgba(50,50,50,0.9);
-  width: 220px;
-  border-radius: 7px;
-  overflow-y: auto;
-  max-height: calc(47px * 11);
-  z-index: 99;
-  flex-direction: column;
-  gap: 10px;
-  opacity: 0;
-  transition: all 0.3s ease;
-  transform: translateY(-10px);
+  display: none;                         /* 預設隱藏下拉選單 */
+  position: fixed;                      /* 固定在畫面上 */
+  top: 60px;                            /* 距離畫面上方 60px（在漢堡選單下方） */
+  left: 20px;                           /* 距離畫面左側 20px */
+  background-color: rgba(50,50,50,0.9); /* 半透明深色背景 */
+  width: 220px;                         /* 選單寬度 */
+  border-radius: 7px;                  /* 圓角 */
+  overflow-y: auto;                    /* 內容超出時顯示垂直捲軸 */
+  max-height: calc(47px * 11);          /* 最大高度（約 11 個選項） */
+  z-index: 99;                          /* 層級設定，避免被遮擋 */
+  flex-direction: column;              /* 子項目垂直排列 */
+  gap: 10px;                           /* 項目之間的間距 */
+  opacity: 0;                          /* 初始透明度為 0 */
+  transition: all 0.3s ease;           /* 顯示／隱藏的動畫效果 */
+  transform: translateY(-10px);        /* 初始位置略往上（動畫用） */
 }
 
+
 .dropdown-content.show {
-  display: flex;
-  opacity: 1;
-  transform: translateY(0);
+  display: flex;                /* 顯示下拉選單並使用 flex 排列 */
+  opacity: 1;                   /* 設為完全不透明 */
+  transform: translateY(0);     /* 回到原本位置，形成滑入效果 */
 }
 
 .dropdown-content a {
-  display: block;
-  padding: 12px 20px;
-  color: white;
-  text-decoration: none;
-  font-size: 1em;
-  background-color: #999;
-  border-radius: 8px;
-  text-align: center;
-  transition: filter 0.3s;
+  display: block;               /* 每個連結獨佔一行 */
+  padding: 12px 20px;           /* 上下內距 12px、左右 20px */
+  color: white;                 /* 文字顏色為白色 */
+  text-decoration: none;        /* 移除底線 */
+  font-size: 1em;               /* 字體大小為 1em */
+  background-color: #999;       /* 背景灰色 */
+  border-radius: 8px;           /* 圓角 */
+  text-align: center;           /* 文字置中 */
+  transition: filter 0.3s;      /* 懸停時的過渡效果 */
 }
 
-.dropdown-content a:hover { filter: brightness(80%); }
+
+.dropdown-content a:hover { filter: brightness(80%); } /* 滑鼠懸停時，降低亮度形成暗化效果 */
 </style>
 </head>
 <body>
