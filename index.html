@@ -1,488 +1,224 @@
-<!DOCTYPE html>				<!-- 宣告 HTML5 文件類型 -->
-<html lang="zh-TW">			<!-- 指定網頁語系為繁體中文（台灣） -->
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8">	 		<!-- 設定字元編碼為 UTF-8，避免中文亂碼 -->
-<title>活動資訊</title>			<!-- 瀏覽器分頁顯示的標題 -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">		  <!-- 載入 Google Fonts：思源宋體（繁體中文） -->
+<meta charset="UTF-8">
+<title>WC / 楓幣 比價計算器</title>
 <style>
-/* --------------------
-   CSS 變數設定
--------------------- */
-:root {
-  --space-left-middle: 40px;	/* 左欄與中欄的間距 */
-  --space-middle-right: 40px;	/* 中欄與右欄的間距 */
-  --title-height: 50px;		/* 標題區塊高度 */
-  --btn-radius: 12px;		/* 按鈕圓角半徑 */
-}
-
-/* --------------------
-   全域樣式
--------------------- */
-body {
-  background-color: #000;	/* 整個頁面背景為黑色 */
-  margin: 0;			/* 移除瀏覽器預設外距 */
-  font-family: 'Noto Serif TC', 'Microsoft JhengHei', serif;	      /* 字型優先順序：Google 字型 → 微軟正黑 → serif */
-  color: white;			/* 全站預設文字顏色為白色 */
-  overflow-x: hidden;		/* 防止橫向捲軸出現 */
-}
-
-/* 容器區域 */
-.container {
-  margin-top: 80px;		/* 與頁面頂部保持距離（可能有 header） */
-  display: flex;		/* 使用 Flexbox 排版 */
-  flex-wrap: wrap;		/* 螢幕縮小時允許換行 */
-  padding: 20px 40px;		/* 內距：上下 20px，左右 40px */
-}
-
-/* --------------------
-   左欄 Info 區
--------------------- */
-.info {
-  flex: 0 0 310px;				/* 固定寬度 300px */
-  line-height: 2;				/* 行高 */
-  letter-spacing: 1px;				/* 字間距 */
-  margin-right: var(--space-left-middle);	/* 右邊距 */
-  text-align: center;				/* 文字置中 */
-  font-size: 1.1em;				/* 字體稍大 */
-}
-
-.info .t-red, .info .t-purple { font-size: 1.3em; }	/* 字體稍大 */
-
-.info-title {
-  text-align: center;					/* 文字置中 */
-  font-size: 1.5em;					/* 標題字體較大 */
-  font-weight: 600;					/* 半粗體 */
-  padding-bottom: 10px;					/* 底部內距 */
-  border-bottom: 3px solid #fff;			/* 底部白色線條 */
-  width: 100%;						/* 寬度填滿父容器 */
-  box-sizing: border-box;				/* 含內距與邊框計算寬度 */
-  height: var(--title-height);				/* 高度使用 CSS 變數 */
-  display: flex;					/* 使用 Flex 排版 */
-  align-items: center;					/* 垂直置中內容 */
-  justify-content: center;				/* 水平置中內容 */
-  margin-bottom: 20px;					/* 下方外距 */
-  color: #ffcc00;					/* 文字顏色黃金色 */
-  text-shadow: 1px 1px 3px #000;			/* 黑色文字陰影 */
-}
-
-/* --------------------
-   中欄 Links 區
--------------------- */
-.links { 
-  flex: 0 0 280px;				/* 固定寬度 280px */
-  margin-right: var(--space-middle-right);	/* 右邊距 */	
-}
-
-.links-title {
-  text-align: center;				/* 文字置中 */
-  font-size: 1.5em; 				/* 標題字體較大 */
-  font-weight: 600;				/* 半粗體 */
-  padding-bottom: 10px;				/* 底部內距 */
-  border-bottom: 3px solid #fff;		/* 底部白色線條 */
-  width: 100%;					/* 寬度填滿父容器 */
-  box-sizing: border-box;			/* 含內距與邊框計算寬度 */
-  height: var(--title-height);			/* 高度使用 CSS 變數 */
-  display: flex;				/* 使用 Flex 排版 */
-  align-items: center;				/* 垂直置中 */
-  justify-content: center;			/* 水平置中 */
-  margin-bottom: 20px;				/* 下方外距 */
-  color: #ffcc00;				/* 文字顏色黃金色 */
-  text-shadow: 1px 1px 3px #000;		/* 黑色文字陰影 */
-}
-
-.links .btn {
-  display: block;				/* 區塊元素，整行點擊 */
-  text-align: center;				/* 文字置中 */
-  padding: 14px;				/* 內距 */
-  margin-bottom: 12px;				/* 底部間距 */
-  border-radius: var(--btn-radius);		/* 圓角 */
-  color: #fff;					/* 文字白色 */
-  font-weight: 600;				/* 半粗體 */
-  text-decoration: none;			/* 移除底線 */
-  font-size: 1.1em;				/* 字體稍大 */
-  transition: transform 0.2s, filter 0.2s;	/* 動畫效果 */
-}
-
-.links .btn:hover {				/* 滑鼠懸停效果 */
-  transform: scale(1.08);			/* 放大 8% */
-}
-
-/* --------------------
-   右欄 Images 區
--------------------- */
-.images { flex: 0 0 300px; }			/* 固定寬度 300px */
-.images img { 
-  width: 100%;					/* 寬度填滿父容器 */
-  border-radius: 12px;				/* 圓角 */
-  margin-bottom: 12px;				/* 下方間距 */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);	/* 陰影效果 */
-}
-
-.images .boss-img {
-  width: 200%;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-}
-
-
-   
-
-/* --------------------
-   文字顏色
--------------------- */
-.t-red { color: #ff4d4d; }		/* 紅色：偏亮的紅色 */
-.t-orange { color: #ffa500; }	/* 橘色：標準橘色 */
-.t-yellow { color: #ffd700; }	/* 黃色：金黃色 */
-.t-green { color: #5cff5c; }	/* 綠色：亮綠色 */
-.t-blue { color: #4db8ff; }		/* 藍色：天空藍 */
-.t-indigo { color: #9b7cff; }	/* 靛色：偏紫的藍色 */
-.t-purple { color: #d88cff; }	/* 紫色：淡紫色 */
-.t-beige { color: #e8e0c8; }	/* 米色：淺米白色 */
-
-/* --------------------
-   響應式 (小螢幕)
--------------------- */
-@media (max-width: 900px) {				/* 螢幕寬度小於等於 900px 時套用（平板 / 手機） */
-  .container { flex-direction: column; padding: 20px; }		/* 版面改為直向排列並增加內距 */
-  .info, .links, .images { flex: 1 1 auto; margin-right: 0; margin-bottom: 20px; }	/* 區塊自動伸縮、取消右邊距、增加下邊距 */	
-  .info-title, .links-title { height: auto; display: block; text-align: center; padding-bottom: 8px; }	 /* 標題高度自適應、置中顯示並加下方間距 */
-}
-
-/* --------------------
-   櫻花飄落 CSS
--------------------- */
-.sakura {
-    position: fixed;
-    top: -30px;
-    pointer-events: none;
-    transform-origin: center;
-    will-change: transform, opacity;
-    animation: fall var(--dur, 8s) linear forwards;
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.22));
-}
-
-@keyframes fall {
-    0% { transform: translateY(0) rotate(var(--rot-start,0deg)); opacity: 1; }
-    80% { opacity: 0.95; }
-    100% { transform: translateY(120vh) rotate(var(--rot-end,360deg)); opacity: 0.4; }
-}
-
-@keyframes sway {
-    0% { transform: translateX(0); }
-    50% { transform: translateX(var(--drift,20px)); }
-    100% { transform: translateX(0); }
-}
-
-.sakura .petal { animation: sway var(--dur,8s) ease-in-out infinite; }
-
-/* --------------------
-   漢堡選單 CSS
--------------------- */
-.hamburger-menu {                /* 漢堡選單容器 */
-  position: fixed;               /* 固定在畫面上不隨滾動 */
-  top: 20px;                     /* 距離畫面上方 20px */
-  left: 20px;                    /* 距離畫面左側 20px */
-  display: flex;                 /* 使用彈性盒模型排列 */
-  align-items: center;           /* 垂直置中對齊 */
-  gap: 8px;                      /* 圖示與文字間距 */
-  cursor: pointer;               /* 滑鼠移上顯示手型 */
-  z-index: 100;                  /* 提高層級避免被遮擋 */
-  font-size: 1.3em;              /* 字體大小放大 */
-  color: #fff;                   /* 文字顏色為白色 */
-}
-
-
-.dropdown-content {
-  display: none;                         /* 預設隱藏下拉選單 */
-  position: fixed;                      /* 固定在畫面上 */
-  top: 60px;                            /* 距離畫面上方 60px（在漢堡選單下方） */
-  left: 20px;                           /* 距離畫面左側 20px */
-  background-color: rgba(50,50,50,0.9); /* 半透明深色背景 */
-  width: 220px;                         /* 選單寬度 */
-  border-radius: 7px;                  /* 圓角 */
-  overflow-y: auto;                    /* 內容超出時顯示垂直捲軸 */
-  max-height: calc(47px * 11);          /* 最大高度（約 11 個選項） */
-  z-index: 99;                          /* 層級設定，避免被遮擋 */
-  flex-direction: column;              /* 子項目垂直排列 */
-  gap: 10px;                           /* 項目之間的間距 */
-  opacity: 0;                          /* 初始透明度為 0 */
-  transition: all 0.3s ease;           /* 顯示／隱藏的動畫效果 */
-  transform: translateY(-10px);        /* 初始位置略往上（動畫用） */
-}
-
-
-.dropdown-content.show {
-  display: flex;                /* 顯示下拉選單並使用 flex 排列 */
-  opacity: 1;                   /* 設為完全不透明 */
-  transform: translateY(0);     /* 回到原本位置，形成滑入效果 */
-}
-
-.dropdown-content a {
-  display: block;               /* 每個連結獨佔一行 */
-  padding: 12px 20px;           /* 上下內距 12px、左右 20px */
-  color: white;                 /* 文字顏色為白色 */
-  text-decoration: none;        /* 移除底線 */
-  font-size: 1em;               /* 字體大小為 1em */
-  background-color: #999;       /* 背景灰色 */
-  border-radius: 8px;           /* 圓角 */
-  text-align: center;           /* 文字置中 */
-  transition: filter 0.3s;      /* 懸停時的過渡效果 */
-}
-
-.switch-btn {
-  padding: 6px 16px;
-  margin: 0 5px;
-  border-radius: 8px;
-  border: none;
-  background-color: #444;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.switch-btn:hover {
-  background-color: #666;
-}
-
-.switch-btn.active {
-  background-color: #ffcc00;
-  color: #000;
-}
-
-
-.dropdown-content a:hover { filter: brightness(80%); } /* 滑鼠懸停時，降低亮度形成暗化效果 */
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+    .row {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    select, input {
+        padding: 6px;
+        font-size: 14px;
+    }
+    input {
+        width: 120px;
+        text-align: right;
+    }
+    .qty {
+        width: 70px;
+        text-align: center;
+    }
+    .formula {
+        font-size: 13px;
+        color: #555;
+        min-width: 220px;
+    }
+    .result {
+        font-weight: bold;
+        color: #0066cc;
+        min-width: 180px;
+    }
 </style>
 </head>
 <body>
 
-<!-- 漢堡選單 -->
-<div class="hamburger-menu">
-  <span>☰</span>
-  <span class="hamburger-text">歷史隊伍</span>
+<h2>WC / 楓幣 比價計算器</h2>
+
+<!-- 方案 -->
+<div class="row">
+    <label>方案：</label>
+    <select id="package" onchange="calculateAll()">
+        <option value="120|800">120 台幣 = 800 WC</option>
+        <option value="1990|13200" selected>1990 台幣 = 13,200 WC</option>
+    </select>
 </div>
 
-<!-- 下拉選單內容 -->
-<div class="dropdown-content" id="dropdown-content">
-	<a href="https://docs.google.com/spreadsheets/d/1KHZmqSpBLppgRDXQGYoHEcDOft4YD7-s-ZauKCJspJI/edit?usp=sharing" target="_blank">2026 01/29-02/04</a>
-	<a href="https://docs.google.com/spreadsheets/d/1Pa8OeLv_E6WYpW5jaCShmiSezRniTjeCJvhIHxpgtaE/edit?usp=sharing" target="_blank">2026 01/22-01/28</a>
-	<a href="https://docs.google.com/spreadsheets/d/1UzdaKzS24_qBiP3uWbnYycqxDF20F_LPL-prBHcgQds/edit?usp=sharing" target="_blank">2026 01/15-01/21</a>
-	<a href="https://docs.google.com/spreadsheets/d/1xodfKanEi_bTwkixqlaUXCoL6O4r7sDsEpGD3LNEnuk/edit?usp=sharing" target="_blank">2026 01/08-01/14</a>
-	<a href="https://docs.google.com/spreadsheets/d/1CLNclrEE6fgZY8MFMc_7u6dhO6lCHOT9fiFm6Wb4pMI/edit?usp=sharing" target="_blank">2026 01/01-01/07</a>
-	<a href="https://docs.google.com/spreadsheets/d/1ZAsC9stGXyiO3l4DX5fzievJQLftPcu3cPXJfOoPOyw/edit?usp=sharing" target="_blank">2025 12/25-12/31</a>
-	<a href="https://docs.google.com/spreadsheets/d/1u-5SRCl979wymjdq2XtN99puhiItrbZVpoEFhfTJ_E8/edit?usp=sharing" target="_blank">2025 12/18-12/24</a>
-	<a href="https://docs.google.com/spreadsheets/d/1ReU1J6WFrHdxOZYEI_Va1l3-i6nwgrXA8_BKWprlWG0/edit?usp=sharing" target="_blank">2025 12/11-12/17</a>
-	<a href="https://docs.google.com/spreadsheets/d/1PV5TviB33uHzHgNyfk3kAabiayyUyFY2-6TZXjr9H-M/edit?usp=sharing" target="_blank">2025 12/04-12/10</a>
-	<a href="https://docs.google.com/spreadsheets/d/16rp5guUY1K6_5ioYNQdFAd0Kg9SKHxVJTKzyfYCUd7E/edit?usp=sharing" target="_blank">2025 11/27-12/03</a>
-	<a href="https://docs.google.com/spreadsheets/d/1FPEIA_cTIxuUjUaGPD4QDXLMHSOQQa0DIuZZCE8Vi18/edit?usp=sharing" target="_blank">2025 11/20-11/26</a>
-	<a href="https://docs.google.com/spreadsheets/d/1BX9VBFDp53yoXEzbw3jZqUQ2RI2OfJABbIyEDeqKCS8/edit?usp=sharing" target="_blank">2025 11/13-11/19</a>
-	<a href="https://docs.google.com/spreadsheets/d/1ktDsTHT9evTiqrOstr8UzMOK8OGQN9MLRKQPmyf5zCU/edit?usp=sharing" target="_blank">2025 11/06-11/12</a>
-	<a href="https://docs.google.com/spreadsheets/d/1Zg6_-7VW7ZqclRG1e0zbQbBY0ntBlKSJz-2d5bJ0txI/edit?usp=sharing" target="_blank">2025 10/30-11/05</a>
-	<a href="https://docs.google.com/spreadsheets/d/1Hp2n3nwDEoDojshraOOAvvAg_4YZNnS_7Xcb_Tt_YR0/edit?usp=sharing" target="_blank">2025 10/23-10/29</a>
-	<a href="https://docs.google.com/spreadsheets/d/1KLaeWNQMqNXh7AM-lqZ0r_zRGmm9SeXmAbqFVCsCWus/edit?usp=sharing" target="_blank">2025 10/16-10/22</a>
-	<a href="https://docs.google.com/spreadsheets/d/1qnVl6wNSDzBb2Z7ylEp_EQNCLEtBuWZEh551ENB89-o/edit?usp=sharing" target="_blank">2025 10/09-10/15</a>
-	<a href="https://docs.google.com/spreadsheets/d/1Ebus4duNAm39ZsD_bRKsTwRUqyfpVm7VZmyAY8fpUHc/edit?usp=sharing" target="_blank">2025 10/02-10/08</a>
-	<a href="https://docs.google.com/spreadsheets/d/1iFTvLo7oNPLWu1CH8DLfMZo5UCHWHC2D1-YIR7TMXCA/edit?usp=sharing" target="_blank">2025 09/25-10/01</a>
-	<a href="https://docs.google.com/spreadsheets/d/1vJP0NwidFQ2XqXArbHJg3BX8VhRrWIuumBSi02Unxes/edit?usp=sharing" target="_blank">2025 09/18-09/24</a>
+<div id="calculator">
+
+<!-- ===== 行 1 ===== -->
+<div class="row calc-row">
+    <select class="item" onchange="itemChanged(this)">
+        <option selected>突襲卷</option>
+        <option>高級瞬移石</option>
+        <option>飄雪結晶</option>
+        <option>其他</option>
+    </select>
+
+    <select class="wc-select" onchange="wcPackageChanged(this)">
+        <option value="">WC方案</option>
+        <option value="1200|7">突襲卷（1200WC / 7）</option>
+        <option value="3000|110">飄雪結晶（3000WC / 110）</option>
+        <option value="4000|110">高級瞬移石（4000WC / 110）</option>
+    </select>
+
+    <input class="qty" type="number" min="1" value="7" oninput="qtyChanged(this)">
+    <input class="wc" placeholder="WC 單價" oninput="formatInput(this); calculateRow(this)">
+    <input class="maple" placeholder="楓幣" oninput="formatInput(this); calculateRow(this)">
+    <div class="formula"></div>
+    <div class="result">1 台幣 = <span>0</span> 楓幣</div>
 </div>
 
-<div class="container">
-  <!-- 左欄 Info -->
-  <div class="info">
-    <div class="info-title">活動資訊</div>
+<!-- ===== 行 2 ===== -->
+<div class="row calc-row">
+    <select class="item" onchange="itemChanged(this)">
+        <option>突襲卷</option>
+        <option selected>高級瞬移石</option>
+        <option>飄雪結晶</option>
+        <option>其他</option>
+    </select>
 
-<div class="switch-btns" style="margin: 10px 0;">
-  <button id="btn-latus" class="switch-btn">拉圖斯</button>
-  <button id="btn-flame" class="switch-btn">炎魔</button>
+    <select class="wc-select" onchange="wcPackageChanged(this)">
+        <option value="">WC方案</option>
+        <option value="1200|7">突襲卷（1200WC / 7）</option>
+        <option value="3000|110">飄雪結晶（3000WC / 110）</option>
+        <option value="4000|110">高級瞬移石（4000WC / 110）</option>
+    </select>
+
+    <input class="qty" type="number" min="1" value="110" oninput="qtyChanged(this)">
+    <input class="wc" placeholder="WC 單價" oninput="formatInput(this); calculateRow(this)">
+    <input class="maple" placeholder="楓幣" oninput="formatInput(this); calculateRow(this)">
+    <div class="formula"></div>
+    <div class="result">1 台幣 = <span>0</span> 楓幣</div>
 </div>
 
-<div id="latus" class="event-content">
-  <div class="t-red">建議等級　110等以上</div>
-  <div class="t-orange">劍　士　－　 120等『UP』－－－</div>
-  <div class="t-yellow">祭　司　－　　700　『AP』－乾表</div>
-  <div class="t-yellow">冰　雷　－　　650　『AP』－乾表</div>
-  <div class="t-yellow">火　毒　－　　650　『AP』－乾表</div>
-  <div class="t-green">遊　俠　－　2,100　『AD』－乾表</div>
-  <div class="t-green">狙擊手　－　2,200　『AD』－乾表</div>
-  <div class="t-blue">神槍手　－　2,000　『AD』－乾表</div>
-  <div class="t-blue">格鬥家　－　2,700　『AD』－乾表</div>
-  <div class="t-indigo">神　偷　－　2,200　『AD』－乾表</div>
-  <div class="t-indigo">暗殺者　－　1,700　『AD』－乾表</div>
-  <br>
-  <div class="t-purple">入場費：雪花x1~2 ＋ D片x1</div>
-  <br>
-  <div class="t-beige">※ 攻擊力為建議值，</div>
-  <div class="t-beige">實際依裝備 / 職業 / 熟練度不同。</div>
+<!-- ===== 行 3 ===== -->
+<div class="row calc-row">
+    <select class="item" onchange="itemChanged(this)">
+        <option>突襲卷</option>
+        <option>高級瞬移石</option>
+        <option selected>飄雪結晶</option>
+        <option>其他</option>
+    </select>
+
+    <select class="wc-select" onchange="wcPackageChanged(this)">
+        <option value="">WC方案</option>
+        <option value="1200|7">突襲卷（1200WC / 7）</option>
+        <option value="3000|110">飄雪結晶（3000WC / 110）</option>
+        <option value="4000|110">高級瞬移石（4000WC / 110）</option>
+    </select>
+
+    <input class="qty" type="number" min="1" value="110" oninput="qtyChanged(this)">
+    <input class="wc" placeholder="WC 單價" oninput="formatInput(this); calculateRow(this)">
+    <input class="maple" placeholder="楓幣" oninput="formatInput(this); calculateRow(this)">
+    <div class="formula"></div>
+    <div class="result">1 台幣 = <span>0</span> 楓幣</div>
 </div>
 
-<div id="flame" class="event-content" style="display:none;">
-  <div class="t-red">建議等級　140等以上</div> 
-  <div class="t-red">依4轉技能多少而定</div> 
-  <div class="t-red">必須會機制</div> 
-  <br>
-  <div class="t-purple">入場費：火眼x1 + 雪花x5</div>
-  <br>
-  <div class="t-beige">※ 攻擊力為建議值，</div>
-  <div class="t-beige">實際依裝備 / 職業 / 熟練度不同。</div>
+<!-- ===== 行 4 ===== -->
+<div class="row calc-row">
+    <select class="item" onchange="itemChanged(this)">
+        <option>突襲卷</option>
+        <option>高級瞬移石</option>
+        <option>飄雪結晶</option>
+        <option selected>其他</option>
+    </select>
+
+    <select class="wc-select" onchange="wcPackageChanged(this)">
+        <option value="">WC方案</option>
+        <option value="1200|7">突襲卷（1200WC / 7）</option>
+        <option value="3000|110">飄雪結晶（3000WC / 110）</option>
+        <option value="4000|110">高級瞬移石（4000WC / 110）</option>
+    </select>
+
+    <input class="qty" type="number" min="1" value="1" oninput="qtyChanged(this)">
+    <input class="wc" placeholder="WC 單價" oninput="formatInput(this); calculateRow(this)">
+    <input class="maple" placeholder="楓幣" oninput="formatInput(this); calculateRow(this)">
+    <div class="formula"></div>
+    <div class="result">1 台幣 = <span>0</span> 楓幣</div>
 </div>
-</div>
-  <!-- 中欄 Links -->
-  <div class="links">
-    <div class="links-title">報名連結</div>
-	
-	<a href="https://docs.google.com/spreadsheets/d/1f5_ru1Ru-juGY7BVpbN9wHWktQg8eNmKLnBK7b5Ty4E/edit?usp=sharing" target="_blank" class="btn">2026 02/05-02/11</a>
-	<a href="https://docs.google.com/spreadsheets/d/1hxxvJ_sI24nqQmluoiXtIqfQ1gBljkL4-Rms1xWlGb4/edit?usp=sharing" target="_blank" class="btn">2026 02/12-02/18</a>
-	<a href="#" target="_blank" class="btn">　　</a>
-	<a href="#" target="_blank" class="btn">　　</a>
-	<a href="#" target="_blank" class="btn">　　</a>
-	<a href="#" target="_blank" class="btn">　　</a>
-	<a href="#" target="_blank" class="btn">　　</a>
-  </div>
 
-
-   
-  <!-- 右欄 Images -->
-<div class="images">
-  <img id="img-latus"
-       src="https://raw.githubusercontent.com/Sin-Nan-0510/Sin-Nan-0510/main/1.gif"
-       alt="拉圖斯">
-
-<img id="img-flame"
-     class="boss-img"
-     src="https://raw.githubusercontent.com/Sin-Nan-0510/Sin-Nan-0510/main/炎魔.gif"
-     alt="炎魔"
-     style="display:none;">
 </div>
 
 <script>
-// --------------------
-// 櫻花動畫
-// --------------------
-(function(){
-    const svgns="http://www.w3.org/2000/svg"; 
-    const rand=(min,max)=>min+Math.random()*(max-min);
+function formatNumber(n){return n.toLocaleString("zh-TW");}
+function parseNumber(s){return parseFloat(s.replace(/,/g,""))||0;}
 
-    function createPetal(){
-        const svg=document.createElementNS(svgns,"svg");
-        svg.setAttribute("viewBox","0 0 100 100");
-        svg.classList.add("sakura");
+function formatInput(el){
+    const v=parseNumber(el.value);
+    el.value=v?formatNumber(v):"";
+}
 
-        const dur=rand(6,12);
-        svg.style.setProperty("--dur",dur+"s");
-        svg.style.setProperty("--rot-start",rand(-20,20)+"deg");
-        svg.style.setProperty("--rot-end",rand(180,540)+"deg");
-        svg.style.setProperty("--drift",rand(10,40)+"px");
-        svg.style.left=rand(0,100)+"vw";
-        svg.style.opacity=rand(0.8,1);
-        const size=rand(18,50);
-        svg.style.width=size+"px";
-        svg.style.height=size+"px";
+function calculateRow(el){
+    const row=el.closest(".calc-row");
+    const wc=parseNumber(row.querySelector(".wc").value);
+    const maple=parseNumber(row.querySelector(".maple").value);
+    const result=row.querySelector(".result span");
+    if(wc<=0||maple<=0){result.innerText="0";return;}
+    const [twd,totalWC]=document.getElementById("package").value.split("|").map(Number);
+    const wcPerTwd=totalWC/twd;
+    result.innerText=formatNumber(Math.floor(wcPerTwd*(maple/wc)));
+}
 
-        const defs=document.createElementNS(svgns,"defs");
-        const grad=document.createElementNS(svgns,"linearGradient");
-        const gid="grad"+Date.now()+Math.random();
-        grad.setAttribute("id",gid);
-        grad.setAttribute("x1","0%");
-        grad.setAttribute("y1","0%");
-        grad.setAttribute("x2","100%");
-        grad.setAttribute("y2","100%");
-        const s1=document.createElementNS(svgns,"stop");
-        s1.setAttribute("offset","0%");
-        s1.setAttribute("stop-color","#ffe3f1");
-        const s2=document.createElementNS(svgns,"stop");
-        s2.setAttribute("offset","70%");
-        s2.setAttribute("stop-color","#ff9ac3");
-        grad.appendChild(s1);
-        grad.appendChild(s2);
-        defs.appendChild(grad);
-        svg.appendChild(defs);
+function calculateAll(){
+    document.querySelectorAll(".calc-row input").forEach(i=>calculateRow(i));
+}
 
-        const path=document.createElementNS(svgns,"path");
-        path.setAttribute("class","petal");
-        path.setAttribute("fill",`url(#${gid})`);
-        path.setAttribute("d","M50 10 C70 25,80 45,60 70 C50 85,40 85,30 70 C10 45,30 25,50 10 Z");
-        path.setAttribute("opacity",rand(0.85,1));
-        svg.appendChild(path);
+function wcPackageChanged(sel){
+    const row=sel.closest(".calc-row");
+    if(!sel.value)return;
+    const [total,qty]=sel.value.split("|").map(Number);
+    row.querySelector(".qty").value=qty;
+    const wc=Math.floor(total/qty);
+    row.querySelector(".wc").value=formatNumber(wc);
+    row.querySelector(".formula").innerText=
+        `${formatNumber(total)} WC ÷ ${qty} = ${formatNumber(wc)} WC`;
+    calculateRow(row.querySelector(".wc"));
+}
 
-        document.body.appendChild(svg);
-        setTimeout(()=>svg.remove(),(dur*1000)+2000);
+function qtyChanged(inp){
+    const row=inp.closest(".calc-row");
+    const sel=row.querySelector(".wc-select");
+    if(!sel.value||inp.value<=0)return;
+    const total=parseInt(sel.value.split("|")[0]);
+    const wc=Math.floor(total/inp.value);
+    row.querySelector(".wc").value=formatNumber(wc);
+    row.querySelector(".formula").innerText=
+        `${formatNumber(total)} WC ÷ ${inp.value} = ${formatNumber(wc)} WC`;
+    calculateRow(row.querySelector(".wc"));
+}
+
+function itemChanged(sel){
+    const map={
+        "突襲卷":"1200|7",
+        "飄雪結晶":"3000|110",
+        "高級瞬移石":"4000|110"
+    };
+    const row=sel.closest(".calc-row");
+    if(map[sel.value]){
+        row.querySelector(".wc-select").value=map[sel.value];
+        wcPackageChanged(row.querySelector(".wc-select"));
+    }else{
+        row.querySelector(".wc-select").value="";
+        row.querySelector(".formula").innerText="";
     }
+}
 
-    setInterval(createPetal,300);
-})();
-
-// --------------------
-// 漢堡選單功能
-// --------------------
-const hamburger = document.querySelector('.hamburger-menu');
-const dropdown = document.getElementById('dropdown-content');
-
-hamburger.addEventListener('click', e => {
-    e.stopPropagation();
-    dropdown.classList.toggle('show');
+/* ✅ 頁面載入時自動套用預設 */
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".calc-row .item").forEach(sel => {
+        itemChanged(sel);
+    });
 });
-
-window.addEventListener('click', () => dropdown.classList.remove('show'));
-dropdown.addEventListener('click', e => e.stopPropagation());
-
-// --------------------
-// 彩虹按鈕背景
-// --------------------
-const rainbowColors=['#ea4335','#ff6d01','#fbbc05','#34a853','#00bcd4','#4285f4','#a142f4'];
-const buttons = document.querySelectorAll('.links .btn');
-
-buttons.forEach((btn, index)=>{
-  const color = rainbowColors[index % rainbowColors.length];
-  btn.style.background = color;
-  btn.addEventListener('mouseover', ()=>btn.style.filter='brightness(120%)');
-  btn.addEventListener('mouseout', ()=>btn.style.filter='brightness(100%)');
-});
-
-// --------------------
-// 活動資訊＋圖片切換（拉圖斯 / 炎魔）
-// --------------------
-const btnLatus = document.getElementById('btn-latus');
-const btnFlame = document.getElementById('btn-flame');
-
-const latus = document.getElementById('latus');
-const flame = document.getElementById('flame');
-
-const imgLatus = document.getElementById('img-latus');
-const imgFlame = document.getElementById('img-flame');
-
-// 預設啟用拉圖斯
-btnLatus.classList.add('active');
-
-btnLatus.addEventListener('click', () => {
-  // 文字
-  latus.style.display = 'block';
-  flame.style.display = 'none';
-
-  // 圖片
-  imgLatus.style.display = 'block';
-  imgFlame.style.display = 'none';
-
-  // 按鈕狀態
-  btnLatus.classList.add('active');
-  btnFlame.classList.remove('active');
-});
-
-btnFlame.addEventListener('click', () => {
-  // 文字
-  latus.style.display = 'none';
-  flame.style.display = 'block';
-
-  // 圖片
-  imgLatus.style.display = 'none';
-  imgFlame.style.display = 'block';
-
-  // 按鈕狀態
-  btnFlame.classList.add('active');
-  btnLatus.classList.remove('active');
-});
-
-
 </script>
+
 </body>
 </html>
