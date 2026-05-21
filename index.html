@@ -520,8 +520,9 @@ btnFlame.addEventListener('click', () => {
 });
 </script>
 
-<audio controls class="music-player" id="bgm">
-    <source src="music.mp3" type="audio/mpeg"> </audio>
+<audio controls loop class="music-player" id="bgm">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 <script>
      document.getElementById("bgm").volume = 0.3; // 透過 JavaScript 將預設播放音量調整為 30% (預設1.0太大聲)
 </script>
