@@ -450,8 +450,8 @@ body {
 
         document.body.appendChild(svg); // 將做好的櫻花加入至網頁中
         
-        // 當動畫播完後（下落時間過後），自動將該櫻花從 HTML 中移除，避免網頁變卡
-        setTimeout(()=>svg.remove(),(dur*1000)+2000);
+        // 當動畫播放完畢時（監聽 animationend 事件），自動將該櫻花從 DOM 中移除，避免網頁殘留過多節點導致變卡
+        svg.addEventListener('animationend', () => svg.remove());
     }
     // 每 300 毫秒 (0.3秒) 自動產生一片新花瓣
     setInterval(createPetal,300);
@@ -489,8 +489,8 @@ buttons.forEach((btn, index)=>{
 });
 
 // 4. 左欄活動資訊與右欄 Boss 圖片切換功能 (炎魔 / 拉圖斯)
-const btnLatus = document.getElementById('btn-latus');   // 炎魔按鈕
-const btnFlame = document.getElementById('btn-flame');   // 拉圖斯按鈕
+const btnLatus = document.getElementById('btn-latus');   // 拉圖斯按鈕
+const btnFlame = document.getElementById('btn-flame');   // 炎魔按鈕
 const latus = document.getElementById('latus');           // 炎魔資訊內容
 const flame = document.getElementById('flame');           // 拉圖斯資訊內容
 const imgLatus = document.getElementById('img-latus');   // 炎魔圖片
