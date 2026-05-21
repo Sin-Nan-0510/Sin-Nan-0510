@@ -6,7 +6,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">		  <!-- 載入 Google Fonts：思源宋體（繁體中文） -->
 <style>
 
+/* 背景顏色按鈕 */
+.color-button {
+    position: fixed; /* 固定位置 */
+    top: 20px; /* 距離上方 */
+    right: 20px; /* 距離右邊 */
+    padding: 10px 15px; /* 內距 */
+    border: none; /* 移除邊框 */
+    border-radius: 10px; /* 圓角 */
+    cursor: pointer; /* 滑鼠效果 */
+    z-index: 999; /* 避免被圖片蓋住 */
+}
 
+/* 音樂 */	
 .music-player {
     position: fixed; /* 固定在畫面上 */
     left: 20px; /* 距離左邊 20px */
@@ -490,13 +502,52 @@ btnFlame.addEventListener('click', () => {
   btnLatus.classList.remove('active');
 });
 
+	
+		</script>
+			<audio controls class="music-player" id="bgm">
+    	<source src="music.mp3" type="audio/mpeg">
+		</audio>
+		<script>
+   			 document.getElementById("bgm").volume = 0.3; // 音量 30%
+		</script>
+
+<!-- 背景顏色切換按鈕 -->
+<button onclick="changeColor()" class="color-button">
+    切換背景顏色
+</button>
+
+<script>
+
+    // 背景顏色
+    const colors = [
+        "#ffffff", // 白色
+        "#000000", // 黑色
+        "#4a4e69", // 夜櫻
+        "#87ceeb", // 天藍
+        "#1e1e1e"  // 深灰
+    ];
+
+    // 預設背景：夜櫻
+    let index = 2;
+
+    // 網站一開始的背景顏色
+    document.body.style.backgroundColor = colors[index];
+
+    // 切換背景顏色
+    function changeColor() {
+
+        index++;
+
+        // 超過數量後回到第一個
+        if (index >= colors.length) {
+            index = 0;
+        }
+
+        // 更換背景顏色
+        document.body.style.backgroundColor = colors[index];
+    }
 
 </script>
-	<audio controls class="music-player" id="bgm">
-    	<source src="music.mp3" type="audio/mpeg">
-	</audio>
-	<script>
-    document.getElementById("bgm").volume = 0.3; // 音量 30%
-	</script>
+	
 </body>
 </html>
