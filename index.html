@@ -57,7 +57,7 @@
             .music-player {
                 position: fixed; /* 固定定位 */
                 left: 20px; /* 距離左方 20px */
-                bottom: 20px; /* 距離底部 20px */
+                bottom: calc(20px + env(safe-area-inset-bottom));/* 預設距離 20px，但在有小橫條的手機上會自動再加上安全高度 */
                 z-index: 999; /* 確保不被遮擋 */
                 width: 300px; /* 播放器寬度固定為 300px */
             }
