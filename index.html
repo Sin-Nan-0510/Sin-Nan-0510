@@ -5,6 +5,16 @@
 <title>活動資訊</title>			<!-- 瀏覽器分頁顯示的標題 -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">		  <!-- 載入 Google Fonts：思源宋體（繁體中文） -->
 <style>
+
+
+.music-player {
+    position: fixed; /* 固定在畫面上 */
+    left: 20px; /* 距離左邊 20px */
+    bottom: 20px; /* 距離底部 20px */
+    z-index: 999; /* 避免被圖片蓋住 */
+    width: 300px; /* 播放器寬度 */
+}
+	
 /* --------------------
    CSS 變數設定
 -------------------- */
@@ -482,8 +492,8 @@ btnFlame.addEventListener('click', () => {
 
 
 </script>
-	<audio autoplay loop controls>
+	<audio controls class="music-player">
     <source src="music.mp3" type="audio/mpeg">
-</audio>
+	</audio>
 </body>
 </html>
