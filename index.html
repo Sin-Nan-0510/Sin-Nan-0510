@@ -18,6 +18,37 @@
     z-index: 999; /* 避免被圖片蓋住 */
 }
 
+/* 顏色選擇器 */
+.color-picker {
+    position: fixed; /* 固定位置 */
+    top: 20px; /* 距離上方 */
+    right: 20px; /* 距離右邊 */
+
+    display: flex; /* 橫向排列 */
+    gap: 10px; /* 圓圈間距 */
+
+    z-index: 999;
+}
+
+/* 顏色圓圈 */
+.color-circle {
+    width: 25px; /* 寬度 */
+    height: 25px; /* 高度 */
+
+    border-radius: 50%; /* 圓形 */
+
+    border: 2px solid white; /* 白色外框 */
+
+    cursor: pointer; /* 滑鼠效果 */
+
+    transition: 0.2s; /* 動畫效果 */
+}
+
+/* 滑鼠碰到放大 */
+.color-circle:hover {
+    transform: scale(1.2);
+}	
+
 /* 音樂 */	
 .music-player {
     position: fixed; /* 固定在畫面上 */
@@ -512,42 +543,47 @@ btnFlame.addEventListener('click', () => {
 		</script>
 
 <!-- 背景顏色切換按鈕 -->
-<button onclick="changeColor()" class="color-button">
-    切換背景顏色
-</button>
+<!-- 背景顏色選擇器 -->
+<div class="color-picker">
 
+    <div class="color-circle"
+         style="background:#ffffff;"
+         onclick="changeColor('#ffffff')">
+    </div>
+
+    <div class="color-circle"
+         style="background:#000000;"
+         onclick="changeColor('#000000')">
+    </div>
+
+    <div class="color-circle"
+         style="background:#4a3b76;"
+         onclick="changeColor('#4a3b76')">
+    </div>
+
+    <div class="color-circle"
+         style="background:#87ceeb;"
+         onclick="changeColor('#87ceeb')">
+    </div>
+
+    <div class="color-circle"
+         style="background:#1e1e1e;"
+         onclick="changeColor('#1e1e1e')">
+    </div>
+
+</div>
 <script>
 
-    // 背景顏色
-    const colors = [
-        "#ffffff", // 白色
-        "#000000", // 黑色
-        "#4a4e69", // 夜櫻
-        "#87ceeb", // 天藍
-        "#1e1e1e"  // 深灰
-    ];
-
-    // 預設背景：夜櫻
-    let index = 2;
-
-    // 網站一開始的背景顏色
-    document.body.style.backgroundColor = colors[index];
+    // 預設背景：紫色夜櫻
+    document.body.style.backgroundColor = "#4a3b76";
 
     // 切換背景顏色
-    function changeColor() {
-
-        index++;
-
-        // 超過數量後回到第一個
-        if (index >= colors.length) {
-            index = 0;
-        }
-
-        // 更換背景顏色
-        document.body.style.backgroundColor = colors[index];
+    function changeColor(color) {
+        document.body.style.backgroundColor = color;
     }
 
 </script>
+
 	
 </body>
 </html>
