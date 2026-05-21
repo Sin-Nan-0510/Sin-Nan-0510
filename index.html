@@ -53,13 +53,27 @@
                 transform: scale(1.2); /* 整體放大 1.2 倍 */
             }
 
-            /* 音樂播放器樣式：改成融入網頁中欄的內嵌區塊 */
+            /* 音樂播放器樣式：重回左下角懸浮定位 */
             .music-player {
-                display: block; /* 改為區塊元素，讓它能像按鈕一樣正常融入網頁排版中 */
-                width: 100%; /* 自動填滿中欄的寬度，與下方的報名連結按鈕等寬 */
-                max-width: 300px; /* 限制播放器最大寬度為 300px，避免在電腦版過度拉長變形 */
-                margin: 10px auto 20px auto; /* 上方留 10px、下方留 20px 間距，左右自動居中對齊 */
-                box-sizing: border-box; /* 讓瀏覽器計算寬度時包含內距與邊框，防止超出框框 */
+                position: fixed; /* 固定定位：讓播放器固定在畫面上，不隨網頁捲動而移走 */
+                left: 20px; /* 距離瀏覽器視窗左側 20px */
+                bottom: 20px; /* 電腦版不需要推高，維持舒適的 20px 即可 */
+                z-index: 999; /* 圖層級別設為 999，確保永遠在最上層，不被櫻花或內容遮擋 */
+                width: 300px; /* 電腦版播放器寬度固定為 300px */
+            }
+
+            /* 針對手機螢幕的 RWD 額外修正（小於 900px，如 iPhone 12） */
+            @media (max-width: 900px) {
+                .music-player {
+                    /* 1. 依然維持在左側 20px，絕對不置中，這樣就不會壓到網頁中間的活動與報名內容 */
+                    left: 20px !important;
+
+                    /* 2. 在手機版強制將底部距離拉高到 80px，徹底彈出 Safari 底部網址列與 iOS 小黑條的遮擋範圍 */
+                    bottom: calc(80px + env(safe-area-inset-bottom)) !important;
+
+                    /* 3. 將手機版的播放器寬度縮小到 230px，讓它精緻地縮在角落，把更多空間留給網頁 */
+                    width: 230px !important;
+                }
             }
 
             /* 全域 CSS 全域變數設定 */
@@ -369,30 +383,66 @@
         <div class="hamburger-menu"><span>☰</span> <span class="hamburger-text">歷史隊伍</span></div>
 
         <div class="dropdown-content" id="dropdown-content">
-            <a href="https://docs.google.com/spreadsheets/d/1S9dj5OgWg4zuEtnJ2cztHGmGlBucgWyJJWTkd4M9ixo/edit?usp=sharing"
+            <a
+                href="https://docs.google.com/spreadsheets/d/1S9dj5OgWg4zuEtnJ2cztHGmGlBucgWyJJWTkd4M9ixo/edit?usp=sharing"
                 target="_blank"
                 class="btn"
-                >2026 05/14~05/20</a>
-            <a href="https://docs.google.com/spreadsheets/d/1v3U82-AUR_fpWGu21aIi0VhOqlQfKcIvag4edWw4l4Y/edit?usp=sharing"
-                target="_blank" class="btn">2026 05/07~05/13</a>
-            <a href="https://docs.google.com/spreadsheets/d/19Whx_iMzjLt5tClt1CJeVbmOMnZXylg-tt6TyNh7EcE/edit?usp=sharing"
-                target="_blank" class="btn">2026 04/30~05/06</a>
-            <a href="https://docs.google.com/spreadsheets/d/1zRWMx-PKA8b5iWVKGHOKLRVK5ndp9YXrdW8nXbp3VBI/edit?usp=sharing"
-                target="_blank" class="btn">2026 04/23~04/29</a>
-            <a href="https://docs.google.com/spreadsheets/d/1_3EEmyaFWtJ__z_-dIiwpndy7dJWXSROFbuIeerwN7k/edit?usp=sharing"
-                target="_blank" class="btn">2026 04/16~04/22</a>
-            <a href="https://docs.google.com/spreadsheets/d/1ua84KFYO9pgp58v3HIjyKJr8sCL--LLf06XlqZneZd8/edit?usp=sharing"
-                target="_blank" >2026 04/09~04/15</a>
-            <a href="https://docs.google.com/spreadsheets/d/1qrfqAxh-Za0Zrb5xswor6dJZ-dvu_JZIYJnxXIpbb8E/edit?usp=sharing"
-                target="_blank" >2026 04/02~04/08</a>
-            <a href="https://docs.google.com/spreadsheets/d/1iTzJvAY2aogkXlDBYlzkiNRH36wM9o30Okc4yfUZbYY/edit?usp=sharing"
-                target="_blank" >2026 03/26~04/01</a>
-            <a href="https://docs.google.com/spreadsheets/d/1itUmQyBdJCAtE2epvTu5hNIkM3xrVNYcJkdMM6DXBEs/edit?usp=sharing"
-                target="_blank" >2026 03/19~03/25</a>
-            <a href="https://docs.google.com/spreadsheets/d/1jhL7JqJG0_5_lUdP2OWY3nKHJI-GxwqEFR9Kb6e_cJU/edit?usp=sharing"
-                target="_blank" >2026 03/12~03/18</a>
-            <a href="https://docs.google.com/spreadsheets/d/1DrBeBQzAO0uipK8Y_t9Ba9Mmh6-dMDD2onwSLFc_3zg/edit?usp=sharing"
-                target="_blank" >2026 03/05~03/11</a>
+                >2026 05/14~05/20</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1v3U82-AUR_fpWGu21aIi0VhOqlQfKcIvag4edWw4l4Y/edit?usp=sharing"
+                target="_blank"
+                class="btn"
+                >2026 05/07~05/13</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/19Whx_iMzjLt5tClt1CJeVbmOMnZXylg-tt6TyNh7EcE/edit?usp=sharing"
+                target="_blank"
+                class="btn"
+                >2026 04/30~05/06</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1zRWMx-PKA8b5iWVKGHOKLRVK5ndp9YXrdW8nXbp3VBI/edit?usp=sharing"
+                target="_blank"
+                class="btn"
+                >2026 04/23~04/29</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1_3EEmyaFWtJ__z_-dIiwpndy7dJWXSROFbuIeerwN7k/edit?usp=sharing"
+                target="_blank"
+                class="btn"
+                >2026 04/16~04/22</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1ua84KFYO9pgp58v3HIjyKJr8sCL--LLf06XlqZneZd8/edit?usp=sharing"
+                target="_blank"
+                >2026 04/09~04/15</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1qrfqAxh-Za0Zrb5xswor6dJZ-dvu_JZIYJnxXIpbb8E/edit?usp=sharing"
+                target="_blank"
+                >2026 04/02~04/08</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1iTzJvAY2aogkXlDBYlzkiNRH36wM9o30Okc4yfUZbYY/edit?usp=sharing"
+                target="_blank"
+                >2026 03/26~04/01</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1itUmQyBdJCAtE2epvTu5hNIkM3xrVNYcJkdMM6DXBEs/edit?usp=sharing"
+                target="_blank"
+                >2026 03/19~03/25</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1jhL7JqJG0_5_lUdP2OWY3nKHJI-GxwqEFR9Kb6e_cJU/edit?usp=sharing"
+                target="_blank"
+                >2026 03/12~03/18</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1DrBeBQzAO0uipK8Y_t9Ba9Mmh6-dMDD2onwSLFc_3zg/edit?usp=sharing"
+                target="_blank"
+                >2026 03/05~03/11</a
+            >
         </div>
 
         <div class="container">
@@ -434,15 +484,19 @@
             </div>
 
             <div class="links">
-                <audio controls loop class="music-player" id="bgm">
-                    <source src="music.mp3" type="audio/mpeg" />
-                </audio>
-
                 <div class="links-title">報名連結</div>
-                <a href="https://docs.google.com/spreadsheets/d/1dyhsf2ydlAawIY2ha9OyLpdD1Q4MHOip632mFE-906w/edit?usp=sharing"
-                    target="_blank" class="btn" >2026 05/21~05/27</a>
-                <a href="https://docs.google.com/spreadsheets/d/1rIDU9XIKEphTBqy5hg9Gj0TuJJvsh6KgVS9LOxfABZM/edit?usp=sharing"
-                    target="_blank" class="btn" >2026 05/28~06/03</a>
+                <a
+                    href="https://docs.google.com/spreadsheets/d/1dyhsf2ydlAawIY2ha9OyLpdD1Q4MHOip632mFE-906w/edit?usp=sharing"
+                    target="_blank"
+                    class="btn"
+                    >2026 05/21~05/27</a
+                >
+                <a
+                    href="https://docs.google.com/spreadsheets/d/1rIDU9XIKEphTBqy5hg9Gj0TuJJvsh6KgVS9LOxfABZM/edit?usp=sharing"
+                    target="_blank"
+                    class="btn"
+                    >2026 05/28~06/03</a
+                >
                 <a href="javascript:void(0);" class="btn">　</a>
                 <a href="javascript:void(0);" class="btn">　</a>
                 <a href="javascript:void(0);" class="btn">　</a>
@@ -613,7 +667,9 @@
                 btnLatus.classList.remove("active"); // 炎魔按鈕熄滅
             });
         </script>
-
+        <audio controls loop class="music-player" id="bgm">
+            <source src="music.mp3" type="audio/mpeg" />
+        </audio>
         <script>
             document.getElementById("bgm").volume = 0.3; // 透過 JavaScript 將預設播放音量調整為 30% (預設1.0太大聲)
         </script>
@@ -625,6 +681,7 @@
             <div class="color-circle" style="background: #87ceeb" onclick="changeColor('#87ceeb')"></div>
             <div class="color-circle" style="background: #1e1e1e" onclick="changeColor('#1e1e1e')"></div>
         </div>
+
         <script>
             document.body.style.backgroundColor = "#4a3b76"; // 網頁載入時的預設背景色：深紫色夜櫻色
 
