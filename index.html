@@ -51,20 +51,21 @@
     position: fixed; /* 固定定位：讓播放器固定在畫面上，不隨網頁捲動而移走 */
     left: 20px; /* 距離瀏覽器視窗左側 20px */
     bottom: 20px; /* 電腦版不需要推高，維持舒適的 20px 即可 */
-    z-index: 999; /* 圖層級別設為 999，確保永遠在最上層，不被櫻花或內容遮擋 */
+    z-index: 99999; /* 提高到最高級別，防止被任何隱形容器或櫻花圖層擋住點擊範圍 */
     width: 300px; /* 電腦版播放器寬度固定為 300px */
 }
 
-/* 針對手機螢幕的 RWD 修正（特別優化 iPhone 底部遮擋問題） */
+/* 針對手機螢幕的 RWD 修正（終極解決 iPhone 點不到、被擋住問題） */
 @media (max-width: 900px) {
     .music-player {
         /* 1. 依然維持在左側 20px，絕對不置中，這樣就不會壓到網頁中間的活動與報名內容 */
         left: 20px !important;
 
-        /* 2. 核心修正：將底部距離拉高到 100px，並加上 iOS 安全區域變數，徹底彈出 Safari 底部網址列與小黑條的遮擋範圍 */
-        bottom: calc(100px + env(safe-area-inset-bottom)) !important;
+        /* 2. 強制拉高底部間距至 120px，並加上常規與安全變數雙重保障，徹底彈出 iOS 底部工具列和小黑條 */
+        bottom: 120px !important;
+        bottom: calc(120px + env(safe-area-inset-bottom)) !important;
 
-        /* 3. 將手機版的播放器寬度縮小到 230px，讓它精緻地縮在角落，把更多空間留給網頁 */
+        /* 3. 將手機版的播放器寬度縮小到 230px，讓它精緻地縮在角落 */
         width: 230px !important;
     }
 }
