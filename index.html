@@ -1,547 +1,681 @@
-<!DOCTYPE html>			<!-- 宣告 HTML5 文件類型 -->
-<html lang="zh-TW">		<!-- 指定網頁語系為繁體中文（台灣） -->
-<head>
-<meta charset="UTF-8">		<!-- 設定字元編碼為 UTF-8，避免中文亂碼 -->
-<title>活動資訊</title>		<!-- 瀏覽器分頁顯示的標題 -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
-<style>
-/* ==========================================================================
+<!doctype html>
+<!-- 宣告 HTML5 文件類型 -->
+<html lang="zh-TW">
+    <!-- 指定網頁語系為繁體中文（台灣） -->
+    <head>
+        <meta charset="UTF-8" />
+        <!-- 設定字元編碼為 UTF-8，避免中文亂碼 -->
+        <title>活動資訊</title>
+        <!-- 瀏覽器分頁顯示的標題 -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            /* ==========================================================================
    CSS 樣式表開始
    ========================================================================== */
 
-/* 背景顏色按鈕樣式 */
-.color-button {
-    position: fixed;   /* 固定定位：不隨網頁捲動而移動 */
-    top: 20px;          /* 距離視窗上方 20px */
-    right: 20px;        /* 距離視窗右方 20px */
-    padding: 10px 15px; /* 內距：上下 10px，左右 15px */
-    border: none;       /* 移除預設邊框 */
-    border-radius: 10px;/* 圓角設定 10px */
-    cursor: pointer;    /* 滑鼠移入時顯示為手指形狀 */
-    z-index: 999;       /* 圖層最高級：確保不會被其他圖片或內容遮擋 */
-}
+            /* 背景顏色按鈕樣式 */
+            .color-button {
+                position: fixed; /* 固定定位：不隨網頁捲動而移動 */
+                top: 20px; /* 距離視窗上方 20px */
+                right: 20px; /* 距離視窗右方 20px */
+                padding: 10px 15px; /* 內距：上下 10px，左右 15px */
+                border: none; /* 移除預設邊框 */
+                border-radius: 10px; /* 圓角設定 10px */
+                cursor: pointer; /* 滑鼠移入時顯示為手指形狀 */
+                z-index: 999; /* 圖層最高級：確保不會被其他圖片或內容遮擋 */
+            }
 
-/* 背景顏色選擇器外殼 */
-.color-picker {
-    position: fixed;   /* 固定定位：固定在網頁畫面上 */
-    top: 20px;          /* 距離上方 20px */
-    right: 20px;        /* 距離右方 20px */
-    display: flex;      /* 彈性盒模型：讓內部的顏色圓圈橫向排列 */
-    gap: 10px;          /* 圓圈之間的間距為 10px */
-    z-index: 999;       /* 確保維持在最上層 */
-}
+            /* 背景顏色選擇器外殼 */
+            .color-picker {
+                position: fixed; /* 固定定位：固定在網頁畫面上 */
+                top: 20px; /* 距離上方 20px */
+                right: 20px; /* 距離右方 20px */
+                display: flex; /* 彈性盒模型：讓內部的顏色圓圈橫向排列 */
+                gap: 10px; /* 圓圈之間的間距為 10px */
+                z-index: 999; /* 確保維持在最上層 */
+            }
 
-/* 顏色選擇器的圓圈個體 */
-.color-circle {
-    width: 25px;        /* 寬度 25px */
-    height: 25px;       /* 高度 25px */
-    border-radius: 50%; /* 圓角 50% 即為完美的圓形 */
-    border: 2px solid white; /* 白色外框線 2px */
-    cursor: pointer;    /* 滑鼠移入時顯示為手指 */
-    transition: 0.2s;   /* 動畫過渡時間 0.2 秒（用於放大效果） */
-}
+            /* 顏色選擇器的圓圈個體 */
+            .color-circle {
+                width: 25px; /* 寬度 25px */
+                height: 25px; /* 高度 25px */
+                border-radius: 50%; /* 圓角 50% 即為完美的圓形 */
+                border: 2px solid white; /* 白色外框線 2px */
+                cursor: pointer; /* 滑鼠移入時顯示為手指 */
+                transition: 0.2s; /* 動畫過渡時間 0.2 秒（用於放大效果） */
+            }
 
-/* 當滑鼠懸停在顏色圓圈上時 */
-.color-circle:hover {
-    transform: scale(1.2); /* 整體放大 1.2 倍 */
-}	
+            /* 當滑鼠懸停在顏色圓圈上時 */
+            .color-circle:hover {
+                transform: scale(1.2); /* 整體放大 1.2 倍 */
+            }
 
-/* 音樂播放器樣式 */	
-.music-player {
-    position: fixed;   /* 固定定位 */
-    left: 20px;         /* 距離左方 20px */
-    bottom: 20px;       /* 距離底部 20px */
-    z-index: 999;       /* 確保不被遮擋 */
-    width: 300px;       /* 播放器寬度固定為 300px */
-}
-	
-/* 全域 CSS 全域變數設定 */
-:root {
-  --space-left-middle: 40px;  /* 左欄與中欄的間距 */
-  --space-middle-right: 40px; /* 中欄與右欄的間距 */
-  --title-height: 50px;       /* 標題欄的統一高度 */
-  --btn-radius: 12px;         /* 按鈕的統一圓角半徑 */
-}
+            /* 音樂播放器樣式 */
+            .music-player {
+                position: fixed; /* 固定定位 */
+                left: 20px; /* 距離左方 20px */
+                bottom: 20px; /* 距離底部 20px */
+                z-index: 999; /* 確保不被遮擋 */
+                width: 300px; /* 播放器寬度固定為 300px */
+            }
 
-/* 全網頁基礎基礎設定 */
-body {
-  background-color: #000;     /* 網頁預設背景色為黑色 */
-  margin: 0;                  /* 移除瀏覽器預設的外邊距 */
-  font-family: 'Noto Serif TC', 'Microsoft JhengHei', serif; /* 字型優先順序：Google宋體 -> 微軟正黑體 -> 系統新細明體 */
-  color: white;               /* 全域文字顏色為白色 */
-  overflow-x: hidden;         /* 隱藏橫向捲軸，防止因內容溢出產生左右晃動 */
-}
+            /* 全域 CSS 全域變數設定 */
+            :root {
+                --space-left-middle: 40px; /* 左欄與中欄的間距 */
+                --space-middle-right: 40px; /* 中欄與右欄的間距 */
+                --title-height: 50px; /* 標題欄的統一高度 */
+                --btn-radius: 12px; /* 按鈕的統一圓角半徑 */
+            }
 
-/* 主內容包覆容器 */
-.container {
-  margin-top: 80px;           /* 上方留空 80px（留給漢堡選單與顏色選擇器） */
-  display: flex;              /* 啟用 Flexbox 排版 */
-  flex-wrap: wrap;            /* 若螢幕寬度不足，允許裡面的區塊自動換行 */
-  padding: 20px 40px;         /* 內距：上下 20px，左右 40px */
-}
+            /* 全網頁基礎基礎設定 */
+            body {
+                background-color: #000; /* 網頁預設背景色為黑色 */
+                margin: 0; /* 移除瀏覽器預設的外邊距 */
+                font-family: "Noto Serif TC", "Microsoft JhengHei", serif; /* 字型優先順序：Google宋體 -> 微軟正黑體 -> 系統新細明體 */
+                color: white; /* 全域文字顏色為白色 */
+                overflow-x: hidden; /* 隱藏橫向捲軸，防止因內容溢出產生左右晃動 */
+            }
 
-/* 左欄：活動資訊區 */
-.info {
-  flex: 0 0 300px;            /* 不放大、不縮小，固定基礎寬度 300px */
-  line-height: 2;             /* 設定行高為文字的 2 倍（加大字距行間） */
-  letter-spacing: 1px;        /* 字與字之間的間距 1px */
-  margin-right: var(--space-left-middle); /* 右邊距使用前面設定的變數 (40px) */
-  text-align: center;         /* 文字內容置中對齊 */
-  font-size: 1.1em;           /* 字體大小為預設的 1.1 倍 */
-}
+            /* 主內容包覆容器 */
+            .container {
+                margin-top: 80px; /* 上方留空 80px（留給漢堡選單與顏色選擇器） */
+                display: flex; /* 啟用 Flexbox 排版 */
+                flex-wrap: wrap; /* 若螢幕寬度不足，允許裡面的區塊自動換行 */
+                padding: 20px 40px; /* 內距：上下 20px，左右 40px */
+            }
 
-/* 加強左欄中特定紅、紫文字的大小 */
-.info .t-red, .info .t-purple { font-size: 1.3em; }
+            /* 左欄：活動資訊區 */
+            .info {
+                flex: 0 0 300px; /* 不放大、不縮小，固定基礎寬度 300px */
+                line-height: 2; /* 設定行高為文字的 2 倍（加大字距行間） */
+                letter-spacing: 1px; /* 字與字之間的間距 1px */
+                margin-right: var(--space-left-middle); /* 右邊距使用前面設定的變數 (40px) */
+                text-align: center; /* 文字內容置中對齊 */
+                font-size: 1.1em; /* 字體大小為預設的 1.1 倍 */
+            }
 
-/* 左欄標題樣式 */
-.info-title {
-  text-align: center;         /* 文字置中 */
-  font-size: 1.5em;           /* 字體放大 1.5 倍 */
-  font-weight: 600;           /* 設定為半粗體 */
-  padding-bottom: 10px;       /* 底部內距 10px */
-  border-bottom: 3px solid #fff; /* 底部加上 3px 白色實線線條 */
-  width: 100%;                /* 寬度 100% */
-  box-sizing: border-box;     /* 邊框與內距包含在寬度計算內 */
-  height: var(--title-height);/* 高度使用變數 (50px) */
-  display: flex;              /* 啟用 flex 讓文字能垂直水平置中 */
-  align-items: center;        /* 垂直置中 */
-  justify-content: center;     /* 水平置中 */
-  margin-bottom: 20px;        /* 下方外距 20px（與內容拉開） */
-  color: #ffcc00;             /* 字體顏色改為金黃色 */
-  text-shadow: 1px 1px 3px #000; /* 加上黑色文字陰影，增加清晰度 */
-}
+            /* 加強左欄中特定紅、紫文字的大小 */
+            .info .t-red,
+            .info .t-purple {
+                font-size: 1.3em;
+            }
 
-/* 中欄：報名連結區 */
-.links { 
-  flex: 0 0 280px;            /* 固定基礎寬度 280px */
-  margin-right: var(--space-middle-right); /* 右邊距使用變數 (40px) */	
-}
+            /* 左欄標題樣式 */
+            .info-title {
+                text-align: center; /* 文字置中 */
+                font-size: 1.5em; /* 字體放大 1.5 倍 */
+                font-weight: 600; /* 設定為半粗體 */
+                padding-bottom: 10px; /* 底部內距 10px */
+                border-bottom: 3px solid #fff; /* 底部加上 3px 白色實線線條 */
+                width: 100%; /* 寬度 100% */
+                box-sizing: border-box; /* 邊框與內距包含在寬度計算內 */
+                height: var(--title-height); /* 高度使用變數 (50px) */
+                display: flex; /* 啟用 flex 讓文字能垂直水平置中 */
+                align-items: center; /* 垂直置中 */
+                justify-content: center; /* 水平置中 */
+                margin-bottom: 20px; /* 下方外距 20px（與內容拉開） */
+                color: #ffcc00; /* 字體顏色改為金黃色 */
+                text-shadow: 1px 1px 3px #000; /* 加上黑色文字陰影，增加清晰度 */
+            }
 
-/* 中欄標題樣式（基本與左欄標題相同） */
-.links-title {
-  text-align: center;
-  font-size: 1.5em; 
-  font-weight: 600;
-  padding-bottom: 10px;
-  border-bottom: 3px solid #fff;
-  width: 100%;
-  box-sizing: border-box;
-  height: var(--title-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  color: #ffcc00;
-  text-shadow: 1px 1px 3px #000;
-}
+            /* 中欄：報名連結區 */
+            .links {
+                flex: 0 0 280px; /* 固定基礎寬度 280px */
+                margin-right: var(--space-middle-right); /* 右邊距使用變數 (40px) */
+            }
 
-/* 中欄按鈕樣式 */
-.links .btn {
-  display: block;             /* 改為區塊元素，使按鈕能獨佔一行並填滿寬度 */
-  text-align: center;         /* 按鈕內的文字置中 */
-  padding: 14px;              /* 按鈕上下左右內距 14px */
-  margin-bottom: 12px;        /* 每個按鈕下方的間距為 12px */
-  border-radius: var(--btn-radius); /* 圓角使用變數 (12px) */
-  color: #fff;                /* 文字顏色為白色 */
-  font-weight: 600;           /* 半粗體 */
-  text-decoration: none;      /* 移除超連結預設的底線 */
-  font-size: 1.1em;           /* 字體大小 1.1 倍 */
-  transition: transform 0.2s, filter 0.2s; /* 當滑鼠移入時，放大與亮度轉變效果時間為 0.2 秒 */
-}
+            /* 中欄標題樣式（基本與左欄標題相同） */
+            .links-title {
+                text-align: center;
+                font-size: 1.5em;
+                font-weight: 600;
+                padding-bottom: 10px;
+                border-bottom: 3px solid #fff;
+                width: 100%;
+                box-sizing: border-box;
+                height: var(--title-height);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 20px;
+                color: #ffcc00;
+                text-shadow: 1px 1px 3px #000;
+            }
 
-/* 當滑鼠懸停在按鈕上時 */
-.links .btn:hover {
-  transform: scale(1.08);     /* 按鈕輕微放大 1.08 倍 */
-}
+            /* 中欄按鈕樣式 */
+            .links .btn {
+                display: block; /* 改為區塊元素，使按鈕能獨佔一行並填滿寬度 */
+                text-align: center; /* 按鈕內的文字置中 */
+                padding: 14px; /* 按鈕上下左右內距 14px */
+                margin-bottom: 12px; /* 每個按鈕下方的間距為 12px */
+                border-radius: var(--btn-radius); /* 圓角使用變數 (12px) */
+                color: #fff; /* 文字顏色為白色 */
+                font-weight: 600; /* 半粗體 */
+                text-decoration: none; /* 移除超連結預設的底線 */
+                font-size: 1.1em; /* 字體大小 1.1 倍 */
+                transition:
+                    transform 0.2s,
+                    filter 0.2s; /* 當滑鼠移入時，放大與亮度轉變效果時間為 0.2 秒 */
+            }
 
-/* 右欄：圖片顯示區 */
-.images { flex: 0 0 300px; }  /* 固定基礎寬度 300px */
+            /* 當滑鼠懸停在按鈕上時 */
+            .links .btn:hover {
+                transform: scale(1.08); /* 按鈕輕微放大 1.08 倍 */
+            }
 
-/* 右欄預設圖片樣式 */
-.images img { 
-  width: 150%;                /* 寬度設定為父容器的 1.5 倍（使其放大呈現） */
-  border-radius: 12px;        /* 圓角 12px */
-  margin-bottom: 12px;        /* 下方間距 12px */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* 加上黑色的細緻陰影，使圖片有立體感 */
-}
+            /* 右欄：圖片顯示區 */
+            .images {
+                flex: 0 0 300px;
+            } /* 固定基礎寬度 300px */
 
-/* 右欄特例：拉圖斯 Boss 圖片的特別縮放樣式 */
-.images .boss-img {
-  width: 80%;                 /* 寬度僅設定 80%（防止該 GIF 太大） */
-  border-radius: 12px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-}
+            /* 右欄預設圖片樣式 */
+            .images img {
+                width: 150%; /* 寬度設定為父容器的 1.5 倍（使其放大呈現） */
+                border-radius: 12px; /* 圓角 12px */
+                margin-bottom: 12px; /* 下方間距 12px */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 加上黑色的細緻陰影，使圖片有立體感 */
+            }
 
-/* 網頁公用文字顏色樣式表 (用於職業或重要資訊標色) */
-.t-red { color: #ff4d4d; }    /* 亮紅色 */
-.t-orange { color: #ffa500; } /* 橘色 */
-.t-yellow { color: #ffd700; } /* 金黃色 */
-.t-green { color: #5cff5c; }  /* 嫩綠色 */
-.t-blue { color: #4db8ff; }   /* 天空藍 */
-.t-indigo { color: #9b7cff; } /* 靛藍色 */
-.t-purple { color: #d88cff; } /* 淡紫色 */
-.t-beige { color: #e8e0c8; }  /* 淺米色 */
+            /* 右欄特例：拉圖斯 Boss 圖片的特別縮放樣式 */
+            .images .boss-img {
+                width: 80%; /* 寬度僅設定 80%（防止該 GIF 太大） */
+                border-radius: 12px;
+                margin-bottom: 12px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            }
 
-/* RWD 響應式排版：當螢幕寬度小於 900px 時自動觸發（如手機、平板） */
-@media (max-width: 900px) {
-  .container { 
-    flex-direction: column;   /* 將原本橫向並排的 Flex 佈局改為直向垂直排列 */
-    padding: 20px;            /* 縮小容器內距 */
-  }
-  .info, .links, .images { 
-    flex: 1 1 auto;           /* 寬度改為自適應充填 */
-    margin-right: 0;          /* 清除右邊距 */
-    margin-bottom: 20px;      /* 改為增加下方間距，拉開垂直區塊 */
-  }	
-  .info-title, .links-title { 
-    height: auto;             /* 取消固定高度 */
-    display: block;           /* 回歸普通區塊 */
-    text-align: center;       /* 文字置中 */
-    padding-bottom: 8px;      /* 調整底部內距 */
-  }
-}
+            /* 網頁公用文字顏色樣式表 (用於職業或重要資訊標色) */
+            .t-red {
+                color: #ff4d4d;
+            } /* 亮紅色 */
+            .t-orange {
+                color: #ffa500;
+            } /* 橘色 */
+            .t-yellow {
+                color: #ffd700;
+            } /* 金黃色 */
+            .t-green {
+                color: #5cff5c;
+            } /* 嫩綠色 */
+            .t-blue {
+                color: #4db8ff;
+            } /* 天空藍 */
+            .t-indigo {
+                color: #9b7cff;
+            } /* 靛藍色 */
+            .t-purple {
+                color: #d88cff;
+            } /* 淡紫色 */
+            .t-beige {
+                color: #e8e0c8;
+            } /* 淺米色 */
 
-/* 櫻花飄落動畫的元件基本樣式 */
-.sakura {
-    position: fixed;          /* 固定定位 */
-    top: -30px;               /* 初始位置在視窗上方看不到的地方 */
-    pointer-events: none;     /* **關鍵**：使滑鼠點擊可以穿透櫻花，不影響網頁按鈕的操作 */
-    transform-origin: center; /* 旋轉中心點設定為圖形正中央 */
-    will-change: transform, opacity; /* 提前告知瀏覽器此元件會做動畫，優化渲染效能 */
-    animation: fall var(--dur, 8s) linear forwards; /* 呼叫 fall 動畫，時間由 JS 動態變數決定，線性前進不回彈 */
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.22)); /* 給櫻花加上細微的下方陰影 */
-}
+            /* RWD 響應式排版：當螢幕寬度小於 900px 時自動觸發（如手機、平板） */
+            @media (max-width: 900px) {
+                .container {
+                    flex-direction: column; /* 將原本橫向並排的 Flex 佈局改為直向垂直排列 */
+                    padding: 20px; /* 縮小容器內距 */
+                }
+                .info,
+                .links,
+                .images {
+                    flex: 1 1 auto; /* 寬度改為自適應充填 */
+                    margin-right: 0; /* 清除右邊距 */
+                    margin-bottom: 20px; /* 改為增加下方間距，拉開垂直區塊 */
+                }
+                .info-title,
+                .links-title {
+                    height: auto; /* 取消固定高度 */
+                    display: block; /* 回歸普通區塊 */
+                    text-align: center; /* 文字置中 */
+                    padding-bottom: 8px; /* 調整底部內距 */
+                }
+            }
 
-/* 櫻花下落與旋轉動畫 */
-@keyframes fall {
-    0% { 
-        transform: translateY(0) rotate(var(--rot-start,0deg)); /* 頂部起點，初始角度由 JS 隨機產生 */
-        opacity: 1; /* 完全顯示 */
-    }
-    80% { 
-        opacity: 0.95; /* 掉落到 80% 高度時依然清晰 */
-    }
-    100% { 
-        transform: translateY(120vh) rotate(var(--rot-end,360deg)); /* 掉落到視窗下方 120% 處，並旋轉到終點角度 */
-        opacity: 0.4; /* 接近底部時變透明 */
-    }
-}
+            /* 櫻花飄落動畫的元件基本樣式 */
+            .sakura {
+                position: fixed; /* 固定定位 */
+                top: -30px; /* 初始位置在視窗上方看不到的地方 */
+                pointer-events: none; /* **關鍵**：使滑鼠點擊可以穿透櫻花，不影響網頁按鈕的操作 */
+                transform-origin: center; /* 旋轉中心點設定為圖形正中央 */
+                will-change: transform, opacity; /* 提前告知瀏覽器此元件會做動畫，優化渲染效能 */
+                animation: fall var(--dur, 8s) linear forwards; /* 呼叫 fall 動畫，時間由 JS 動態變數決定，線性前進不回彈 */
+                filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.22)); /* 給櫻花加上細微的下方陰影 */
+            }
 
-/* 櫻花左右擺動（飄逸感）動畫 */
-@keyframes sway {
-    0% { transform: translateX(0); }
-    50% { transform: translateX(var(--drift,20px)); } /* 中途向右飄移，幅度由 JS 隨機變數決定 */
-    100% { transform: translateX(0); } /* 回到原軸線 */
-}
+            /* 櫻花下落與旋轉動畫 */
+            @keyframes fall {
+                0% {
+                    transform: translateY(0) rotate(var(--rot-start, 0deg)); /* 頂部起點，初始角度由 JS 隨機產生 */
+                    opacity: 1; /* 完全顯示 */
+                }
+                80% {
+                    opacity: 0.95; /* 掉落到 80% 高度時依然清晰 */
+                }
+                100% {
+                    transform: translateY(120vh) rotate(var(--rot-end, 360deg)); /* 掉落到視窗下方 120% 處，並旋轉到終點角度 */
+                    opacity: 0.4; /* 接近底部時變透明 */
+                }
+            }
 
-/* 將左右擺動動畫綁定在櫻花內部的 path 元件上 */
-.sakura .petal { animation: sway var(--dur,8s) ease-in-out infinite; }
+            /* 櫻花左右擺動（飄逸感）動畫 */
+            @keyframes sway {
+                0% {
+                    transform: translateX(0);
+                }
+                50% {
+                    transform: translateX(var(--drift, 20px));
+                } /* 中途向右飄移，幅度由 JS 隨機變數決定 */
+                100% {
+                    transform: translateX(0);
+                } /* 回到原軸線 */
+            }
 
-/* 漢堡選單按鈕樣式 */
-.hamburger-menu {
-  position: fixed;            /* 固定定位 */
-  top: 20px;                  /* 距離上方 20px */
-  left: 20px;                 /* 距離左方 20px */
-  display: flex;              /* flex 佈局 */
-  align-items: center;        /* 垂直置中內部的「☰」圖示與文字 */
-  gap: 8px;                   /* 圖示與文字的間距為 8px */
-  cursor: pointer;            /* 滑鼠變手指 */
-  z-index: 100;               /* 層級 100，確保在內容之上 */
-  font-size: 1.3em;           /* 字體放大 1.3 倍 */
-  color: #fff;                /* 顏色為白色 */
-}
+            /* 將左右擺動動畫綁定在櫻花內部的 path 元件上 */
+            .sakura .petal {
+                animation: sway var(--dur, 8s) ease-in-out infinite;
+            }
 
-/* 漢堡選單點開後的下拉內容區塊 */
-.dropdown-content {
-  display: none;              /* 預設為隱藏 */
-  position: fixed;            /* 固定定位 */
-  top: 60px;                  /* 放置在漢堡按鈕下方 (距離上方 60px) */
-  left: 20px;                 /* 距離左方 20px */
-  background-color: rgba(50,50,50,0.9); /* 深灰色背景，且帶有 90% 的不透明度 */
-  width: 220px;               /* 寬度固定 220px */
-  border-radius: 7px;         /* 圓角 7px */
-  overflow-y: auto;           /* 如果內容太多超過高度，自動顯示垂直捲軸 */
-  max-height: calc(47px * 11);/* 限制最大高度（大約可容納 11 個選項） */
-  z-index: 99;                /* 層級 99 */
-  flex-direction: column;     /* 內部超連結改為垂直排列 */
-  gap: 10px;                  /* 項目間距 10px */
-  opacity: 0;                 /* 初始透明度 0（用於做淡入動畫） */
-  transition: all 0.3s ease;  /* 所有動畫轉變時間為 0.3 秒 */
-  transform: translateY(-10px);/* 初始位置稍微往上移動 10px（做滑入視覺效果） */
-}
+            /* 漢堡選單按鈕樣式 */
+            .hamburger-menu {
+                position: fixed; /* 固定定位 */
+                top: 20px; /* 距離上方 20px */
+                left: 20px; /* 距離左方 20px */
+                display: flex; /* flex 佈局 */
+                align-items: center; /* 垂直置中內部的「☰」圖示與文字 */
+                gap: 8px; /* 圖示與文字的間距為 8px */
+                cursor: pointer; /* 滑鼠變手指 */
+                z-index: 100; /* 層級 100，確保在內容之上 */
+                font-size: 1.3em; /* 字體放大 1.3 倍 */
+                color: #fff; /* 顏色為白色 */
+            }
 
-/* 當 JavaScript 幫下拉選單加上 .show 類別時觸發的樣式 */
-.dropdown-content.show {
-  display: flex;              /* 改為顯示 */
-  opacity: 1;                 /* 透明度變為完全看得到 */
-  transform: translateY(0);   /* 回歸原位，達成向下浮現的效果 */
-}
+            /* 漢堡選單點開後的下拉內容區塊 */
+            .dropdown-content {
+                display: none; /* 預設為隱藏 */
+                position: fixed; /* 固定定位 */
+                top: 60px; /* 放置在漢堡按鈕下方 (距離上方 60px) */
+                left: 20px; /* 距離左方 20px */
+                background-color: rgba(50, 50, 50, 0.9); /* 深灰色背景，且帶有 90% 的不透明度 */
+                width: 220px; /* 寬度固定 220px */
+                border-radius: 7px; /* 圓角 7px */
+                overflow-y: auto; /* 如果內容太多超過高度，自動顯示垂直捲軸 */
+                max-height: calc(47px * 11); /* 限制最大高度（大約可容納 11 個選項） */
+                z-index: 99; /* 層級 99 */
+                flex-direction: column; /* 內部超連結改為垂直排列 */
+                gap: 10px; /* 項目間距 10px */
+                opacity: 0; /* 初始透明度 0（用於做淡入動畫） */
+                transition: all 0.3s ease; /* 所有動畫轉變時間為 0.3 秒 */
+                transform: translateY(-10px); /* 初始位置稍微往上移動 10px（做滑入視覺效果） */
+            }
 
-/* 下拉選單內的選單超連結個體 */
-.dropdown-content a {
-  display: block;             /* 轉為區塊元素 */
-  padding: 12px 20px;         /* 上下內距 12px，左右 20px */
-  color: white;               /* 文字白色 */
-  text-decoration: none;      /* 移除底線 */
-  font-size: 1em;             
-  background-color: #999;     /* 預設背景顏色為灰色 */
-  border-radius: 8px;         /* 圓角 8px */
-  text-align: center;         /* 文字置中 */
-  transition: filter 0.3s;    /* 滑鼠懸停時的濾鏡過渡時間 */
-}
+            /* 當 JavaScript 幫下拉選單加上 .show 類別時觸發的樣式 */
+            .dropdown-content.show {
+                display: flex; /* 改為顯示 */
+                opacity: 1; /* 透明度變為完全看得到 */
+                transform: translateY(0); /* 回歸原位，達成向下浮現的效果 */
+            }
 
-/* 滑鼠懸停在選單連結上時 */
-.dropdown-content a:hover { 
-  filter: brightness(80%);    /* 亮度降低至 80%（製造深色點擊回饋） */
-}
+            /* 下拉選單內的選單超連結個體 */
+            .dropdown-content a {
+                display: block; /* 轉為區塊元素 */
+                padding: 12px 20px; /* 上下內距 12px，左右 20px */
+                color: white; /* 文字白色 */
+                text-decoration: none; /* 移除底線 */
+                font-size: 1em;
+                background-color: #999; /* 預設背景顏色為灰色 */
+                border-radius: 8px; /* 圓角 8px */
+                text-align: center; /* 文字置中 */
+                transition: filter 0.3s; /* 滑鼠懸停時的濾鏡過渡時間 */
+            }
 
-/* 殘暴炎魔 / 拉圖斯 切換按鈕的樣式 */
-.switch-btn {
-  padding: 6px 16px;          /* 內距 */
-  margin: 0 5px;              /* 左右外距 5px，讓兩個按鈕有點距離 */
-  border-radius: 8px;         /* 圓角 8px */
-  border: none;               /* 移除預設外框 */
-  background-color: #444;     /* 預設未選中時為深灰色 */
-  color: #fff;                /* 文字白色 */
-  font-weight: 600;           
-  cursor: pointer;            /* 滑鼠變手指 */
-  transition: background-color 0.2s; /* 背景色轉變動畫 0.2 秒 */
-}
+            /* 滑鼠懸停在選單連結上時 */
+            .dropdown-content a:hover {
+                filter: brightness(80%); /* 亮度降低至 80%（製造深色點擊回饋） */
+            }
 
-/* 當滑鼠移到切換按鈕上時 */
-.switch-btn:hover {
-  background-color: #666;     /* 背景顏色變淺灰 */
-}
+            /* 殘暴炎魔 / 拉圖斯 切換按鈕的樣式 */
+            .switch-btn {
+                padding: 6px 16px; /* 內距 */
+                margin: 0 5px; /* 左右外距 5px，讓兩個按鈕有點距離 */
+                border-radius: 8px; /* 圓角 8px */
+                border: none; /* 移除預設外框 */
+                background-color: #444; /* 預設未選中時為深灰色 */
+                color: #fff; /* 文字白色 */
+                font-weight: 600;
+                cursor: pointer; /* 滑鼠變手指 */
+                transition: background-color 0.2s; /* 背景色轉變動畫 0.2 秒 */
+            }
 
-/* 當按鈕被選中（處於活躍 active 狀態）時 */
-.switch-btn.active {
-  background-color: #ffcc00;  /* 背景色變成金黃色 */
-  color: #000;                /* 文字顏色變成黑色 */
-}
-/* ==========================================================================
+            /* 當滑鼠移到切換按鈕上時 */
+            .switch-btn:hover {
+                background-color: #666; /* 背景顏色變淺灰 */
+            }
+
+            /* 當按鈕被選中（處於活躍 active 狀態）時 */
+            .switch-btn.active {
+                background-color: #ffcc00; /* 背景色變成金黃色 */
+                color: #000; /* 文字顏色變成黑色 */
+            }
+            /* ==========================================================================
    CSS 樣式表結束
    ========================================================================== */
-</style>
-</head>
-<body>
+        </style>
+    </head>
+    <body>
+        <div class="hamburger-menu"><span>☰</span> <span class="hamburger-text">歷史隊伍</span></div>
 
-<div class="hamburger-menu">
-  <span>☰</span> <span class="hamburger-text">歷史隊伍</span>
-</div>
+        <div class="dropdown-content" id="dropdown-content">
+            <a
+                href="https://docs.google.com/spreadsheets/d/1S9dj5OgWg4zuEtnJ2cztHGmGlBucgWyJJWTkd4M9ixo/edit?usp=sharing"
+                target="_blank"
+                class="btn"
+                >2026 05/14~05/20</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1v3U82-AUR_fpWGu21aIi0VhOqlQfKcIvag4edWw4l4Y/edit?usp=sharing"
+                target="_blank"
+                class="btn"
+                >2026 05/07~05/13</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/19Whx_iMzjLt5tClt1CJeVbmOMnZXylg-tt6TyNh7EcE/edit?usp=sharing"
+                target="_blank"
+                class="btn"
+                >2026 04/30~05/06</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1zRWMx-PKA8b5iWVKGHOKLRVK5ndp9YXrdW8nXbp3VBI/edit?usp=sharing"
+                target="_blank"
+                class="btn"
+                >2026 04/23~04/29</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1_3EEmyaFWtJ__z_-dIiwpndy7dJWXSROFbuIeerwN7k/edit?usp=sharing"
+                target="_blank"
+                class="btn"
+                >2026 04/16~04/22</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1ua84KFYO9pgp58v3HIjyKJr8sCL--LLf06XlqZneZd8/edit?usp=sharing"
+                target="_blank"
+                >2026 04/09~04/15</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1qrfqAxh-Za0Zrb5xswor6dJZ-dvu_JZIYJnxXIpbb8E/edit?usp=sharing"
+                target="_blank"
+                >2026 04/02~04/08</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1iTzJvAY2aogkXlDBYlzkiNRH36wM9o30Okc4yfUZbYY/edit?usp=sharing"
+                target="_blank"
+                >2026 03/26~04/01</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1itUmQyBdJCAtE2epvTu5hNIkM3xrVNYcJkdMM6DXBEs/edit?usp=sharing"
+                target="_blank"
+                >2026 03/19~03/25</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1jhL7JqJG0_5_lUdP2OWY3nKHJI-GxwqEFR9Kb6e_cJU/edit?usp=sharing"
+                target="_blank"
+                >2026 03/12~03/18</a
+            >
+            <a
+                href="https://docs.google.com/spreadsheets/d/1DrBeBQzAO0uipK8Y_t9Ba9Mmh6-dMDD2onwSLFc_3zg/edit?usp=sharing"
+                target="_blank"
+                >2026 03/05~03/11</a
+            >
+        </div>
 
-<div class="dropdown-content" id="dropdown-content">
-	<a href="https://docs.google.com/spreadsheets/d/1S9dj5OgWg4zuEtnJ2cztHGmGlBucgWyJJWTkd4M9ixo/edit?usp=sharing" target="_blank" class="btn">2026 05/14~05/20</a>
-	<a href="https://docs.google.com/spreadsheets/d/1v3U82-AUR_fpWGu21aIi0VhOqlQfKcIvag4edWw4l4Y/edit?usp=sharing" target="_blank" class="btn">2026 05/07~05/13</a>
-	<a href="https://docs.google.com/spreadsheets/d/19Whx_iMzjLt5tClt1CJeVbmOMnZXylg-tt6TyNh7EcE/edit?usp=sharing" target="_blank" class="btn">2026 04/30~05/06</a>
-	<a href="https://docs.google.com/spreadsheets/d/1zRWMx-PKA8b5iWVKGHOKLRVK5ndp9YXrdW8nXbp3VBI/edit?usp=sharing" target="_blank" class="btn">2026 04/23~04/29</a>
-	<a href="https://docs.google.com/spreadsheets/d/1_3EEmyaFWtJ__z_-dIiwpndy7dJWXSROFbuIeerwN7k/edit?usp=sharing" target="_blank" class="btn">2026 04/16~04/22</a>
-	<a href="https://docs.google.com/spreadsheets/d/1ua84KFYO9pgp58v3HIjyKJr8sCL--LLf06XlqZneZd8/edit?usp=sharing" target="_blank">2026 04/09~04/15</a>
-	<a href="https://docs.google.com/spreadsheets/d/1qrfqAxh-Za0Zrb5xswor6dJZ-dvu_JZIYJnxXIpbb8E/edit?usp=sharing" target="_blank">2026 04/02~04/08</a>
-	<a href="https://docs.google.com/spreadsheets/d/1iTzJvAY2aogkXlDBYlzkiNRH36wM9o30Okc4yfUZbYY/edit?usp=sharing" target="_blank">2026 03/26~04/01</a>
-	<a href="https://docs.google.com/spreadsheets/d/1itUmQyBdJCAtE2epvTu5hNIkM3xrVNYcJkdMM6DXBEs/edit?usp=sharing" target="_blank">2026 03/19~03/25</a>
-	<a href="https://docs.google.com/spreadsheets/d/1jhL7JqJG0_5_lUdP2OWY3nKHJI-GxwqEFR9Kb6e_cJU/edit?usp=sharing" target="_blank">2026 03/12~03/18</a>
-	<a href="https://docs.google.com/spreadsheets/d/1DrBeBQzAO0uipK8Y_t9Ba9Mmh6-dMDD2onwSLFc_3zg/edit?usp=sharing" target="_blank">2026 03/05~03/11</a>
-</div>
+        <div class="container">
+            <div class="info">
+                <div class="info-title">活動資訊</div>
 
-<div class="container">
+                <div class="switch-btns" style="margin: 10px 0">
+                    <button id="btn-latus" class="switch-btn">殘暴炎魔</button>
+                    <button id="btn-flame" class="switch-btn">拉圖斯</button>
+                </div>
 
-  <div class="info">
-    <div class="info-title">活動資訊</div>
-    
-    <div class="switch-btns" style="margin: 10px 0;">
-        <button id="btn-latus" class="switch-btn">殘暴炎魔</button>
-        <button id="btn-flame" class="switch-btn">拉圖斯</button>
-    </div>
-	  
-    <div id="latus" class="event-content">
-      <div class="t-red">建議等級　140等以上</div> 
-      <br>
-      <div class="t-purple">入場費：雪花x2 ＋火之眼x1</div> 
-      <br>
-      <div class="t-beige">※ 攻擊力為建議值，</div>
-      <div class="t-beige">實際依裝備 / 職業 / 熟練度不同。</div>
-    </div>
+                <div id="latus" class="event-content">
+                    <div class="t-red">建議等級　140等以上</div>
+                    <br />
+                    <div class="t-purple">入場費：雪花x2 ＋火之眼x1</div>
+                    <br />
+                    <div class="t-beige">※ 攻擊力為建議值，</div>
+                    <div class="t-beige">實際依裝備 / 職業 / 熟練度不同。</div>
+                </div>
 
-    <div id="flame" class="event-content" style="display:none;">
-      <div class="t-red">建議等級　110等以上</div>
-      <div class="t-orange">劍　士　－　 120等『UP』－－－</div>
-      <div class="t-yellow">祭　司　－　　700　『AP』－乾表</div>
-      <div class="t-yellow">冰　雷　－　　650　『AP』－乾表</div>
-      <div class="t-yellow">火　毒　－　　650　『AP]－乾表</div>
-      <div class="t-green">遊　俠　－　2,100　『AD』－乾表</div>
-      <div class="t-green">狙擊手　－　2,200　『AD』－乾表</div>
-      <div class="t-blue">神槍手　－　2,000　『AD』－乾表</div>
-      <div class="t-blue">格鬥家　－　2,700　『AD』－乾表</div>
-      <div class="t-indigo">神　偷　－　2,200　『AD』－乾表</div>
-      <div class="t-indigo">暗殺者　－　1,700　『AD』－乾表</div>
-      <br>
-      <div class="t-purple">入場費：雪花x1 ＋ D片x1</div>
-      <br>
-      <div class="t-beige">※ 攻擊力為建議值，</div>
-      <div class="t-beige">實際依裝備 / 職業 / 熟練度不同。</div>
-    </div>
-  </div>
+                <div id="flame" class="event-content" style="display: none">
+                    <div class="t-red">建議等級　110等以上</div>
+                    <div class="t-orange">劍　士　－　 120等『UP』－－－</div>
+                    <div class="t-yellow">祭　司　－　　700　『AP』－乾表</div>
+                    <div class="t-yellow">冰　雷　－　　650　『AP』－乾表</div>
+                    <div class="t-yellow">火　毒　－　　650　『AP]－乾表</div>
+                    <div class="t-green">遊　俠　－　2,100　『AD』－乾表</div>
+                    <div class="t-green">狙擊手　－　2,200　『AD』－乾表</div>
+                    <div class="t-blue">神槍手　－　2,000　『AD』－乾表</div>
+                    <div class="t-blue">格鬥家　－　2,700　『AD』－乾表</div>
+                    <div class="t-indigo">神　偷　－　2,200　『AD』－乾表</div>
+                    <div class="t-indigo">暗殺者　－　1,700　『AD』－乾表</div>
+                    <br />
+                    <div class="t-purple">入場費：雪花x1 ＋ D片x1</div>
+                    <br />
+                    <div class="t-beige">※ 攻擊力為建議值，</div>
+                    <div class="t-beige">實際依裝備 / 職業 / 熟練度不同。</div>
+                </div>
+            </div>
 
-  <div class="links">
-    <div class="links-title">報名連結</div>
-    <a href="https://docs.google.com/spreadsheets/d/1dyhsf2ydlAawIY2ha9OyLpdD1Q4MHOip632mFE-906w/edit?usp=sharing" target="_blank" class="btn">2026 05/21~05/27</a>
-    <a href="https://docs.google.com/spreadsheets/d/1rIDU9XIKEphTBqy5hg9Gj0TuJJvsh6KgVS9LOxfABZM/edit?usp=sharing" target="_blank" class="btn">2026 05/28~06/03</a>
-    
-    <a href="javascript:void(0);" class="btn">　</a>
-    <a href="javascript:void(0);" class="btn">　</a>
-    <a href="javascript:void(0);" class="btn">　</a>
-    <a href="javascript:void(0);" class="btn">　</a>
-    <a href="javascript:void(0);" class="btn">　</a>
-  </div>
-  
-  <div class="images">
-    <img id="img-latus" src="https://raw.githubusercontent.com/Sin-Nan-0510/Sin-Nan-0510/main/炎魔.gif" alt="殘暴炎魔">
-    <img id="img-flame" class="boss-img" src="https://raw.githubusercontent.com/Sin-Nan-0510/Sin-Nan-0510/main/1.gif" alt="拉圖斯" style="display:none;">
-  </div>
-</div>
+            <div class="links">
+                <div class="links-title">報名連結</div>
+                <a
+                    href="https://docs.google.com/spreadsheets/d/1dyhsf2ydlAawIY2ha9OyLpdD1Q4MHOip632mFE-906w/edit?usp=sharing"
+                    target="_blank"
+                    class="btn"
+                    >2026 05/21~05/27</a
+                >
+                <a
+                    href="https://docs.google.com/spreadsheets/d/1rIDU9XIKEphTBqy5hg9Gj0TuJJvsh6KgVS9LOxfABZM/edit?usp=sharing"
+                    target="_blank"
+                    class="btn"
+                    >2026 05/28~06/03</a
+                >
 
-<script>
-// 1. 櫻花隨機產生與飄落特效功能
-(function(){
-    const svgns="http://www.w3.org/2000/svg"; // 宣告 SVG 的命名空間網址
-    const rand=(min,max)=>min+Math.random()*(max-min); // 快速產生範圍內隨機數的函式
+                <a href="javascript:void(0);" class="btn">　</a>
+                <a href="javascript:void(0);" class="btn">　</a>
+                <a href="javascript:void(0);" class="btn">　</a>
+                <a href="javascript:void(0);" class="btn">　</a>
+                <a href="javascript:void(0);" class="btn">　</a>
+            </div>
 
-    function createPetal(){
-        const svg=document.createElementNS(svgns,"svg"); // 建立一個 SVG 容器
-        svg.setAttribute("viewBox","0 0 100 100");
-        svg.classList.add("sakura"); // 套用 CSS 的 .sakura 樣式
+            <div class="images">
+                <img
+                    id="img-latus"
+                    src="https://raw.githubusercontent.com/Sin-Nan-0510/Sin-Nan-0510/main/炎魔.gif"
+                    alt="殘暴炎魔"
+                />
+                <img
+                    id="img-flame"
+                    class="boss-img"
+                    src="https://raw.githubusercontent.com/Sin-Nan-0510/Sin-Nan-0510/main/1.gif"
+                    alt="拉圖斯"
+                    style="display: none"
+                />
+            </div>
+        </div>
 
-        // 隨機產生參數並透過 CSS 變數(Variables)傳遞給 CSS 做動畫
-        const dur=rand(6,12); // 隨機生成掉落時間 6 ~ 12 秒
-        svg.style.setProperty("--dur",dur+"s");
-        svg.style.setProperty("--rot-start",rand(-20,20)+"deg"); // 初始隨機旋轉角度
-        svg.style.setProperty("--rot-end",rand(180,540)+"deg");   // 終點隨機旋轉角度
-        svg.style.setProperty("--drift",rand(10,40)+"px");        // 左右飄移幅度
-        svg.style.left=rand(0,100)+"vw"; // 隨機決定櫻花出現在畫面的橫向位置 (0~100vw)
-        svg.style.opacity=rand(0.8,1);   // 隨機透明度
-        const size=rand(18,50);          // 隨機尺寸大小 18px ~ 50px
-        svg.style.width=size+"px";
-        svg.style.height=size+"px";
+        <script>
+            // 1. 櫻花隨機產生與飄落特效功能
+            (function () {
+                const svgns = "http://www.w3.org/2000/svg"; // 宣告 SVG 的命名空間網址
+                const rand = (min, max) => min + Math.random() * (max - min); // 快速產生範圍內隨機數的函式
 
-        // 動態生成漸層顏色 (粉紅色到深粉紅)，避免所有櫻花顏色完全死板一致
-        const defs=document.createElementNS(svgns,"defs");
-        const grad=document.createElementNS(svgns,"linearGradient");
-        const gid="grad"+Date.now()+Math.random(); // 產生唯一識別 ID
-        grad.setAttribute("id",gid);
-        grad.setAttribute("x1","0%"); grad.setAttribute("y1","0%");
-        grad.setAttribute("x2","100%"); grad.setAttribute("y2","100%");
-        
-        const s1=document.createElementNS(svgns,"stop");
-        s1.setAttribute("offset","0%"); s1.setAttribute("stop-color","#ffe3f1"); // 漸層起點：淺粉
-        const s2=document.createElementNS(svgns,"stop");
-        s2.setAttribute("offset","70%"); s2.setAttribute("stop-color","#ff9ac3"); // 漸層終點：深粉
-        
-        grad.appendChild(s1); grad.appendChild(s2);
-        defs.appendChild(grad); svg.appendChild(defs);
+                function createPetal() {
+                    const svg = document.createElementNS(svgns, "svg"); // 建立一個 SVG 容器
+                    svg.setAttribute("viewBox", "0 0 100 100");
+                    svg.classList.add("sakura"); // 套用 CSS 的 .sakura 樣式
 
-        // 繪製櫻花瓣形狀的 Path 路徑
-        const path=document.createElementNS(svgns,"path");
-        path.setAttribute("class","petal"); // 套用 CSS 左右飄逸樣式
-        path.setAttribute("fill",`url(#${gid})`); // 填入剛剛做好的漸層色
-        path.setAttribute("d","M50 10 C70 25,80 45,60 70 C50 85,40 85,30 70 C10 45,30 25,50 10 Z"); // 花瓣幾何數據
-        path.setAttribute("opacity",rand(0.85,1));
-        svg.appendChild(path);
+                    // 隨機產生參數並透過 CSS 變數(Variables)傳遞給 CSS 做動畫
+                    const dur = rand(6, 12); // 隨機生成掉落時間 6 ~ 12 秒
+                    svg.style.setProperty("--dur", dur + "s");
+                    svg.style.setProperty("--rot-start", rand(-20, 20) + "deg"); // 初始隨機旋轉角度
+                    svg.style.setProperty("--rot-end", rand(180, 540) + "deg"); // 終點隨機旋轉角度
+                    svg.style.setProperty("--drift", rand(10, 40) + "px"); // 左右飄移幅度
+                    svg.style.left = rand(0, 100) + "vw"; // 隨機決定櫻花出現在畫面的橫向位置 (0~100vw)
+                    svg.style.opacity = rand(0.8, 1); // 隨機透明度
+                    const size = rand(18, 50); // 隨機尺寸大小 18px ~ 50px
+                    svg.style.width = size + "px";
+                    svg.style.height = size + "px";
 
-        document.body.appendChild(svg); // 將做好的櫻花加入至網頁中
-        
-        // 當動畫播放完畢時（監聽 animationend 事件），自動將該櫻花從 DOM 中移除，避免網頁殘留過多節點導致變卡
-        svg.addEventListener('animationend', () => svg.remove());
-    }
-    // 每 300 毫秒 (0.3秒) 自動產生一片新花瓣
-    setInterval(createPetal,300);
-})();
+                    // 動態生成漸層顏色 (粉紅色到深粉紅)，避免所有櫻花顏色完全死板一致
+                    const defs = document.createElementNS(svgns, "defs");
+                    const grad = document.createElementNS(svgns, "linearGradient");
+                    const gid = "grad" + Date.now() + Math.random(); // 產生唯一識別 ID
+                    grad.setAttribute("id", gid);
+                    grad.setAttribute("x1", "0%");
+                    grad.setAttribute("y1", "0%");
+                    grad.setAttribute("x2", "100%");
+                    grad.setAttribute("y2", "100%");
 
-// 2. 漢堡選單點擊展開 / 收合控制
-const hamburger = document.querySelector('.hamburger-menu'); // 抓取漢堡按鈕
-const dropdown = document.getElementById('dropdown-content');   // 抓取下拉選單本體
+                    const s1 = document.createElementNS(svgns, "stop");
+                    s1.setAttribute("offset", "0%");
+                    s1.setAttribute("stop-color", "#ffe3f1"); // 漸層起點：淺粉
+                    const s2 = document.createElementNS(svgns, "stop");
+                    s2.setAttribute("offset", "70%");
+                    s2.setAttribute("stop-color", "#ff9ac3"); // 漸層終點：深粉
 
-// 監聽漢堡按鈕的點擊事件
-hamburger.addEventListener('click', e => {
-    e.stopPropagation(); // 阻止事件冒泡：防止點擊按鈕的同時，觸發到下方 window 的關閉事件
-    dropdown.classList.toggle('show'); // 自動切換（有 .show 就移除，沒有就加上）來達成開關效果
-});
+                    grad.appendChild(s1);
+                    grad.appendChild(s2);
+                    defs.appendChild(grad);
+                    svg.appendChild(defs);
 
-// 當點擊網頁上任何其他空白處時，自動收合選單
-window.addEventListener('click', () => dropdown.classList.remove('show'));
+                    // 繪製櫻花瓣形狀的 Path 路徑
+                    const path = document.createElementNS(svgns, "path");
+                    path.setAttribute("class", "petal"); // 套用 CSS 左右飄逸樣式
+                    path.setAttribute("fill", `url(#${gid})`); // 填入剛剛做好的漸層色
+                    path.setAttribute("d", "M50 10 C70 25,80 45,60 70 C50 85,40 85,30 70 C10 45,30 25,50 10 Z"); // 花瓣幾何數據
+                    path.setAttribute("opacity", rand(0.85, 1));
+                    svg.appendChild(path);
 
-// 防止點選下拉選單內部的連結項目時，也無故導致選單直接消失
-dropdown.addEventListener('click', e => e.stopPropagation());
+                    document.body.appendChild(svg); // 將做好的櫻花加入至網頁中
 
-// 3. 中欄報名按鈕自動彩虹標色
-const rainbowColors=['#ea4335','#ff6d01','#fbbc05','#34a853','#00bcd4','#4285f4','#a142f4']; // 定義彩虹七色陣列
-const buttons = document.querySelectorAll('.links .btn'); // 抓取中欄的所有按鈕
+                    // 當動畫播放完畢時（監聽 animationend 事件），自動將該櫻花從 DOM 中移除，避免網頁殘留過多節點導致變卡
+                    svg.addEventListener("animationend", () => svg.remove());
+                }
+                // 1. 宣告一個變數來存計時器
+                let sakuraInterval;
 
-// 透過迴圈自動幫按鈕上色
-buttons.forEach((btn, index)=>{
-  const color = rainbowColors[index % rainbowColors.length]; // 依序抓取顏色（超出 7 個會重頭循環）
-  btn.style.background = color; // 設定背景顏色
-  
-  // 監聽滑鼠移入：按鈕變亮
-  btn.addEventListener('mouseover', ()=>btn.style.filter='brightness(120%)');
-  // 監聽滑鼠移出：還原原本亮度
-  btn.addEventListener('mouseout', ()=>btn.style.filter='brightness(100%)');
-});
+                // 2. 封裝啟動功能
+                function startSakura() {
+                    // 把 createSakura 改成你原本的函式名稱 createPetal
+                    sakuraInterval = setInterval(createPetal, 500);
+                }
 
-// 4. 左欄活動資訊與右欄 Boss 圖片切換功能 (炎魔 / 拉圖斯)
-const btnLatus = document.getElementById('btn-latus');   // 炎魔按鈕
-const btnFlame = document.getElementById('btn-flame');   // 拉圖斯按鈕
-const latus = document.getElementById('latus');           // 炎魔資訊內容
-const flame = document.getElementById('flame');           // 拉圖斯資訊內容
-const imgLatus = document.getElementById('img-latus');   // 炎魔圖片
-const imgFlame = document.getElementById('img-flame');   // 拉圖斯圖片
+                // 3. 封裝停止功能
+                function stopSakura() {
+                    clearInterval(sakuraInterval);
+                }
 
-// 初始化：先幫炎魔按鈕加上活躍樣式
-btnLatus.classList.add('active');
+                // 4. 監聽分頁切換事件
+                document.addEventListener("visibilitychange", () => {
+                    if (document.hidden) {
+                        stopSakura(); // 離開分頁就停止產生，避免累積
+                    } else {
+                        startSakura(); // 回到分頁就重新開始
+                    }
+                });
 
-// 當點擊「殘暴炎魔」按鈕時
-btnLatus.addEventListener('click', () => {
-  latus.style.display = 'block';      // 顯示炎魔資訊
-  flame.style.display = 'none';       // 隱藏拉圖斯資訊
-  imgLatus.style.display = 'block';   // 顯示炎魔圖片
-  imgFlame.style.display = 'none';    // 隱藏拉圖斯圖片
-  btnLatus.classList.add('active');   // 炎魔按鈕發亮
-  btnFlame.classList.remove('active');// 拉圖斯按鈕熄滅
-});
+                // 5. 網頁首頁載入時第一次啟動
+                startSakura();
+            })();
 
-// 當點擊「拉圖斯」按鈕時
-btnFlame.addEventListener('click', () => {
-  latus.style.display = 'none';       // 隱藏炎魔資訊
-  flame.style.display = 'block';      // 顯示拉圖斯資訊
-  imgLatus.style.display = 'none';    // 隱藏炎魔圖片
-  imgFlame.style.display = 'block';   // 顯示拉圖斯圖片
-  btnFlame.classList.add('active');   // 拉圖斯按鈕發亮
-  btnLatus.classList.remove('active');// 炎魔按鈕熄滅
-});
-</script>
+            // 2. 漢堡選單點擊展開 / 收合控制
+            const hamburger = document.querySelector(".hamburger-menu"); // 抓取漢堡按鈕
+            const dropdown = document.getElementById("dropdown-content"); // 抓取下拉選單本體
 
-<audio controls loop class="music-player" id="bgm">
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-<script>
-     document.getElementById("bgm").volume = 0.3; // 透過 JavaScript 將預設播放音量調整為 30% (預設1.0太大聲)
-</script>
+            // 監聽漢堡按鈕的點擊事件
+            hamburger.addEventListener("click", (e) => {
+                e.stopPropagation(); // 阻止事件冒泡：防止點擊按鈕的同時，觸發到下方 window 的關閉事件
+                dropdown.classList.toggle("show"); // 自動切換（有 .show 就移除，沒有就加上）來達成開關效果
+            });
 
-<div class="color-picker">
-    <div class="color-circle" style="background:#FF6557;" onclick="changeColor('#FF6557')"></div>
-    <div class="color-circle" style="background:#000000;" onclick="changeColor('#000000')"></div>
-    <div class="color-circle" style="background:#4a3b76;" onclick="changeColor('#4a3b76')"></div>
-    <div class="color-circle" style="background:#87ceeb;" onclick="changeColor('#87ceeb')"></div>
-    <div class="color-circle" style="background:#1e1e1e;" onclick="changeColor('#1e1e1e')"></div>
-</div>
-<script>
-    document.body.style.backgroundColor = "#4a3b76"; // 網頁載入時的預設背景色：深紫色夜櫻色
-    
-    // 執行更換網頁 body 背景顏色的函式
-    function changeColor(color) {
-        document.body.style.backgroundColor = color;
-    }
-</script>
-	
-</body>
+            // 當點擊網頁上任何其他空白處時，自動收合選單
+            window.addEventListener("click", () => dropdown.classList.remove("show"));
+
+            // 防止點選下拉選單內部的連結項目時，也無故導致選單直接消失
+            dropdown.addEventListener("click", (e) => e.stopPropagation());
+
+            // 3. 中欄報名按鈕自動彩虹標色
+            const rainbowColors = ["#ea4335", "#ff6d01", "#fbbc05", "#34a853", "#00bcd4", "#4285f4", "#a142f4"]; // 定義彩虹七色陣列
+            const buttons = document.querySelectorAll(".links .btn"); // 抓取中欄的所有按鈕
+
+            // 透過迴圈自動幫按鈕上色
+            buttons.forEach((btn, index) => {
+                const color = rainbowColors[index % rainbowColors.length]; // 依序抓取顏色（超出 7 個會重頭循環）
+                btn.style.background = color; // 設定背景顏色
+
+                // 監聽滑鼠移入：按鈕變亮
+                btn.addEventListener("mouseover", () => (btn.style.filter = "brightness(120%)"));
+                // 監聽滑鼠移出：還原原本亮度
+                btn.addEventListener("mouseout", () => (btn.style.filter = "brightness(100%)"));
+            });
+
+            // 4. 左欄活動資訊與右欄 Boss 圖片切換功能 (炎魔 / 拉圖斯)
+            const btnLatus = document.getElementById("btn-latus"); // 炎魔按鈕
+            const btnFlame = document.getElementById("btn-flame"); // 拉圖斯按鈕
+            const latus = document.getElementById("latus"); // 炎魔資訊內容
+            const flame = document.getElementById("flame"); // 拉圖斯資訊內容
+            const imgLatus = document.getElementById("img-latus"); // 炎魔圖片
+            const imgFlame = document.getElementById("img-flame"); // 拉圖斯圖片
+
+            // 初始化：先幫炎魔按鈕加上活躍樣式
+            btnLatus.classList.add("active");
+
+            // 當點擊「殘暴炎魔」按鈕時
+            btnLatus.addEventListener("click", () => {
+                latus.style.display = "block"; // 顯示炎魔資訊
+                flame.style.display = "none"; // 隱藏拉圖斯資訊
+                imgLatus.style.display = "block"; // 顯示炎魔圖片
+                imgFlame.style.display = "none"; // 隱藏拉圖斯圖片
+                btnLatus.classList.add("active"); // 炎魔按鈕發亮
+                btnFlame.classList.remove("active"); // 拉圖斯按鈕熄滅
+            });
+
+            // 當點擊「拉圖斯」按鈕時
+            btnFlame.addEventListener("click", () => {
+                latus.style.display = "none"; // 隱藏炎魔資訊
+                flame.style.display = "block"; // 顯示拉圖斯資訊
+                imgLatus.style.display = "none"; // 隱藏炎魔圖片
+                imgFlame.style.display = "block"; // 顯示拉圖斯圖片
+                btnFlame.classList.add("active"); // 拉圖斯按鈕發亮
+                btnLatus.classList.remove("active"); // 炎魔按鈕熄滅
+            });
+        </script>
+
+        <audio controls loop class="music-player" id="bgm">
+            <source src="music.mp3" type="audio/mpeg" />
+        </audio>
+        <script>
+            document.getElementById("bgm").volume = 0.3; // 透過 JavaScript 將預設播放音量調整為 30% (預設1.0太大聲)
+        </script>
+
+        <div class="color-picker">
+            <div class="color-circle" style="background: #ff6557" onclick="changeColor('#FF6557')"></div>
+            <div class="color-circle" style="background: #000000" onclick="changeColor('#000000')"></div>
+            <div class="color-circle" style="background: #4a3b76" onclick="changeColor('#4a3b76')"></div>
+            <div class="color-circle" style="background: #87ceeb" onclick="changeColor('#87ceeb')"></div>
+            <div class="color-circle" style="background: #1e1e1e" onclick="changeColor('#1e1e1e')"></div>
+        </div>
+        <script>
+            document.body.style.backgroundColor = "#4a3b76"; // 網頁載入時的預設背景色：深紫色夜櫻色
+
+            // 執行更換網頁 body 背景顏色的函式
+            function changeColor(color) {
+                document.body.style.backgroundColor = color;
+            }
+        </script>
+    </body>
 </html>
